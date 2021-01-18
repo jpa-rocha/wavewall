@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      <script src="{{ url_for('static', filename='js/Tone.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/NexusUI.js') }}"></script>
+      
+      <title>WAVEWALL: {% block title %}{% endblock %}</title>
+  </head>
+  <body id="mainpagebody">
+    <div class="gridwrapper">
+    {% if session.user_id %}
+      <div class="row nav">
+        <div class="col-6 menu">
+          <a href="#" class="nav-el">Home</a>
+          <a href="#" class="nav-el">Synthesiser</a>
+          <a href="#" class="nav-el">Coloursizer</a>
+          <a href="#" class="nav-el">About</a>
+        </div>   
+        <div class="col-4 reg">
+          <a href="#" class="nav-el">Settings</a>
+          <a href="#" class="nav-el">Log Out</a>
+        </div>
+        </div>
+    {% else %}
+      <div class="row nav">
+        <div class="col-6 menu">
+          <a href="#" class="nav-el">Home</a>
+          <a href="/synth" class="nav-el">Synthesiser</a>
+          <a href="#" class="nav-el">Coloursizer</a>
+          <a href="#" class="nav-el">About</a>
+        </div>   
+        <div class="col-4 reg">
+          <a href="#" class="nav-el">Log In</a>
+          <a href="#" class="nav-el">Register</a>
+        </div>
+      </div>
+    {% endif %}
+        
+    {% block main %}{% endblock %}
+      <footer id="footer" class="col-12"><p>Made by João Rocha</p><p>2020</p></footer>
+    </div>
+  </body>
+</html>

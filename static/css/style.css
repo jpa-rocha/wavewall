@@ -1,0 +1,240 @@
+* {
+  box-sizing: border-box;
+}
+
+.gridwrapper {
+  overflow: auto;
+  position: relative;
+}
+
+[class*="col-"] {
+  width: 100%;
+  float: left;
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  div.gridwrapper {
+    font-size: 8px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  div.gridwrapper {
+    font-size: 10px;
+  }
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  div.gridwrapper {
+    font-size: 13px;
+  }
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  div.gridwrapper {
+    font-size: 18px;
+  }
+  .col-l-1 {width: 8.33%;}
+  .col-l-2 {width: 16.66%;}
+  .col-l-3 {width: 25%;}
+  .col-l-4 {width: 33.33%;}
+  .col-l-5 {width: 41.66%;}
+  .col-l-6 {width: 50%;}
+  .col-l-7 {width: 58.33%;}
+  .col-l-8 {width: 66.66%;}
+  .col-l-9 {width: 75%;}
+  .col-l-10 {width: 83.33%;}
+  .col-l-11 {width: 91.66%;}
+  .col-l-12 {width: 100%;}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  div.gridwrapper {
+    font-size: 22px;
+  }
+  .col-xl-1 {width: 8.33%;}
+  .col-xl-2 {width: 16.66%;}
+  .col-xl-3 {width: 25%;}
+  .col-xl-4 {width: 33.33%;}
+  .col-xl-5 {width: 41.66%;}
+  .col-xl-6 {width: 50%;}
+  .col-xl-7 {width: 58.33%;}
+  .col-xl-8 {width: 66.66%;}
+  .col-xl-9 {width: 75%;}
+  .col-xl-10 {width: 83.33%;}
+  .col-xl-11 {width: 91.66%;}
+  .col-xl-12 {width: 100%;}
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#mainpagebody {
+  font-family: 'Courier New', Courier, monospace;
+  background-color:palegreen;
+  color:indigo;
+}
+
+#footer {
+  font-size: 0.5em;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  padding-bottom: 1em;
+}
+
+#mainlink {
+  font-size: 4em;
+  text-decoration: none;
+  color: indigo;
+}
+
+.index {
+  font-size: 4em;
+}
+
+.title {
+  text-decoration: none;
+  font-weight: bold;
+  -webkit-transition: 1s;
+  -moz-transition: 1s;
+  -o-transition: 1s;
+  transition: 1s;
+  transition-timing-function: ease-out;
+}
+
+.title:hover{
+  color:hotpink;
+  font-size: 1.1em;
+}
+
+.nav { 
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  border-bottom-color:indigo;
+}
+
+.reg {
+  float: right;
+  text-align: right;
+  
+}
+
+.nav-el{
+  display: inline-block;
+  text-decoration: none;
+  color: indigo;
+  padding: 0.5em;
+}
+
+.synth {
+  margin-top: 0.5em;
+  border-color:indigo;
+  border-style: solid;
+  border-width: thin;
+  font-size: 0.7em;
+}
+
+.osc {
+  margin-left: 0.5em;
+  text-align: center;
+}
+
+.fieldgroup {
+  border-color:indigo;
+  border-style: solid;
+  border-width: thin;
+}
+
+.fieldlegend {
+  font-weight: bold;
+}
+
+input[type=range][orient=vertical]{
+  writing-mode: bt-lr; /* IE */
+  -webkit-appearance: slider-vertical; /* WebKit */
+  width: 1em;
+  height: 4.1em;
+  padding: 0 5px;
+}
+
+.wavesel {
+  text-align: left;
+}
+
+.volume {
+  text-align: center;
+}
+
+.filter {
+  margin-left: 0.5em;
+  text-align: center;
+
+}
+
+.passel {
+  text-align: left;
+}
+
+.subgroup {
+  border-color: indigo;
+  border-style: solid;
+  border-width: thin;
+  text-align: left;
+}
+
+.subgroupsliders {
+  border-color: indigo;
+  border-style: solid;
+  border-width: thin;
+}

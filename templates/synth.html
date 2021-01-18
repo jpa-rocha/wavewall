@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Synthesiser
+{% endblock %}
+
+{% block main %}
+    <div class="synth">
+      <div class="row">
+        <div class="col-l-4 col-8 col-s-12 osc">
+          <!-- Oscillator -->
+          <fieldset class="fieldgroup">
+            <legend class="fieldlegend">OSC</legend>
+          <fieldset class="subgroup" onclick="osc()">
+            <legend>Waveform</legend>
+            <label for="square"><input id="square" type="radio" name="wave" value="square" checked>Square</label>
+            <label for="saw"><input id="saw" type="radio" name="wave" value="sawtooth">Saw</label>
+            <label for="triangle"><input id="triangle" type="radio" name="wave" value="triangle">Triangle</label>  
+            <label for="sine"><input id="sine" type="radio" name="wave" value="sine">Sine</label>
+          </fieldset>  
+          <fieldset class="subgroup" onclick="osc()">
+            <legend>Type</legend>
+              <label for="plain"><input id="plain" type="radio" name="type" value="" onclick="moddis()" checked>Plain</label>
+              <br>
+              <label for="fm"><input id="fm" type="radio" name="type" value="fm" onclick="moddis()">FM</label>
+              <div>
+                <fieldset class="subgroup" id="fmfieldset" onclick="fmopt()" disabled>
+                  <legend>Modulation</legend>
+                  <label for="fmsquare"><input id="fmsquare" type="radio" name="fm" value="square" checked>Square</label>
+                  <label for="fmsaw"><input id="fmsaw" type="radio" name="fm" value="sawtooth">Saw</label>
+                  <label for="fmtriangle"><input id="fmtriangle" type="radio" name="fm" value="triangle">Triangle</label>  
+                  <label for="fmsine"><input id="fmsine" type="radio" name="fm" value="sine">Sine</label>
+                  <input type="range" min="0" step="0.1" max="2" value="0" id="fmindex"/>
+                  <label for="fmindex">Frequency</label>
+                  <input type="range" min="1" step="0.1" max="1.99" value="1" id="fmharm"/>
+                  <label for="fmharm">Harmonicity</label>
+                </fieldset>  
+              </div>
+              <label for="am"><input id="am" type="radio" name="type" value="am" onclick="moddis()">AM</label>
+              <div >
+                <fieldset class="subgroup" id="amfieldset" onclick="amopt()"disabled>
+                  <legend>Modulation</legend>
+                  <label for="amsquare"><input id="amsquare" type="radio" name="am" value="square" checked>Square</label>
+                  <label for="amsaw"><input id="amsaw" type="radio" name="am" value="sawtooth">Saw</label>
+                  <label for="amtriangle"><input id="amtriangle" type="radio" name="am" value="triangle">Triangle</label>  
+                  <label for="amsine"><input id="amsine" type="radio" name="am" value="sine">Sine</label>
+                  <input type="range" min="1" step="0.1" max="1.99" value="1" id="amharm"/>
+                  <label for="amharm">Harmonicity</label>
+                </fieldset>
+              </div>
+              <label for="fat"><input id="fat" type="radio" name="type" value="fat" onclick="moddis()">FAT</label>
+              <div>
+                <fieldset class="subgroup" id="fatfieldset" onclick="FATopt()" disabled>
+                  <legend>Modulation</legend>
+                  <input type="range" min="1" step="1" max="5" value="1" id="fatcount"/>
+                  <label for="fatmod">Count</label>
+                  <input type="range" min="-100" step="10" max="10" value="-10" id="fatmod"/>
+                  <label for="fatmod">Detune</label>
+                </fieldset>  
+              </div>
+              <label for="pwm"><input id="pwm" type="radio" name="type" value="pwm" onclick="moddis()">PWM</label>
+              <div>
+                <fieldset class="subgroup" id="pwmfieldset" onclick="pwmopt()" disabled>
+                  <legend>Modulation</legend>
+                  <input type="range" min="-100" step="10" max="10" value="-10" id="pwmmod"/>
+                  <label for="pwmmod">Frequency</label>
+                </fieldset>  
+              </div>
+          </fieldset>
+        </fieldset>
+          <div class="volume">
+            <p>Volume</p>
+           <input type="range" orient="vertical" min="-100" step="10" max="10" value="-10" id="vol"/>
+          </div>
+        </div>
+        <div class="col-l-2 col-2 col-s-3 filter">
+          <!-- Filter -->
+          <fieldset class="fieldgroup">
+          <legend class="fieldlegend">Filter</legend>
+          <fieldset class="subgroup" onclick="filtopt()">
+            <legend>Pass</legend>
+            <div class="passel">
+            <label for="lowpass"><input id="lowpass" type="radio" name="filter" value="lowpass" checked>Low-pass</label>
+            </div>
+            <div class="passel">
+              <label for="bandpass"><input id="bandpass" type="radio" name="filter" value="bandpass">Band-pass</label>
+              </div>
+            <div class="passel">
+            <label for="highpass"><input id="highpass" type="radio" name="filter" value="highpass">High-pass</label>
+            </div>
+          </fieldset>
+          <fieldset class="subgroup" onclick="rollopt()">
+            <legend>Roll-off</legend>
+            <div class="passel">
+            <label for="-12"><input id="r12" type="radio" name="roll" value="-12" checked>-12</label>
+            </div>
+            <div class="passel">
+              <label for="-24"><input id="r24" type="radio" name="roll" value="-24">-24</label>
+              </div>
+            <div class="passel">
+            <label for="-48"><input id="r48" type="radio" name="roll" value="-48">-48</label>
+            </div>
+            <div class="passel">
+              <label for="-96"><input id="r96" type="radio" name="roll" value="-96">-96</label>
+              </div>
+          </fieldset>
+          <fieldset class="subgroupsliders">
+          <legend>Cutoff</legend>
+             <input type="range" orient="vertical" min="20" step="1" max="20000" value="0" id="cutoff"/>   
+            </fieldset>     
+        </div>
+      </fieldset>
+        <div class="col-l-2 col-3 col-s-4">
+          <!-- Envelopes -->
+        <fieldset class="fieldgroup">
+        <legend class="fieldlegend">Envelopes</legend>
+        <fieldset class="subgroupsliders">
+          <legend>Amplitude</legend>
+        A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0" id="attacka"/>
+        D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0" id="decaya"/> 
+        S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="0" id="sustaina"/> 
+        R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="0" id="releasea"/> 
+      </fieldset>
+      <fieldset class="subgroupsliders">
+        <legend>Filter</legend>
+        A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0" id="attackf"/>
+        D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0" id="decayf"/> 
+        S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="0" id="sustainf"/> 
+        R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="0" id="releasef"/> 
+      </fieldset>
+        </fieldset>
+      </div>  
+      <button type="button" id="start">Start</button>
+      <button type="button" id="playbtn" onclick="play()">Test</button>
+      <input type ="range" min="2" step="1" max ="6" value="4" id="transposer" onclick="transposer()"/> 
+    </div>
+    <div class="row">
+      <div class="col-2" id="oscilloscope">
+      </div>
+    </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

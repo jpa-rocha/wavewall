@@ -350,25 +350,28 @@ var QWERTZ = [
 ];
 
 // transposing
-var keys = [
-    "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C"
+var notes = [
+    "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", "C5"
 ];
-var notes = [];
-function transposer () {
-    var ti;
+function transposer() {
     var transpose = document.getElementById("transposer");
-    for (ti = 0; ti < keys.lenght; ti ++) {
-        var ccount = 0;
+    var i;
+    var ccount;
+    var note;
+    for (i = 0; i < notes.lenght; i ++) {
+        console.log(i)
+        ccount = 0;
+        console.log(ccount);
         var octave = transpose.value;
-        var note;
-        if  (keys[ti] == "C") {
+        if  (notes[i][0] == "C" && note[i].lenght < 3) {
             ccount += 1;
         }
         if (ccount >= 2) {
-            octave = transpose.value + 1
+            octave = Number(transpose.value) + 1
         }
-        note = keys[ti] + String(octave)
-        notes.push(note);
+        note = notes[i].slice(0,-1) + String(octave);
+        notes[notes.indexOf(i)] = note;
+        
     }
 }
 

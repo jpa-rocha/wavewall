@@ -17,27 +17,22 @@
     {% if session.user_id %}
       <div class="row nav">
         <div class="col-6 menu">
-          <a href="#" class="nav-el">Home</a>
-          <a href="#" class="nav-el">Synthesiser</a>
-          <a href="#" class="nav-el">Coloursizer</a>
-          <a href="#" class="nav-el">About</a>
+          <a href="/synth" class="nav-el">Synthesiser</a>
+          <a href="/about" class="nav-el">About</a>
         </div>   
         <div class="col-4 reg">
-          <a href="#" class="nav-el">Settings</a>
           <a href="#" class="nav-el">Log Out</a>
         </div>
         </div>
     {% else %}
       <div class="row nav">
         <div class="col-6 menu">
-          <a href="#" class="nav-el">Home</a>
           <a href="/synth" class="nav-el">Synthesiser</a>
-          <a href="#" class="nav-el">Coloursizer</a>
-          <a href="#" class="nav-el">About</a>
+          <a href="/about" class="nav-el">About</a>
         </div>   
         <div class="col-4 reg">
-          <a href="#" class="nav-el">Log In</a>
-          <a href="#" class="nav-el">Register</a>
+          <a href="/login" class="nav-el">Log In</a>
+          <a href="/register" class="nav-el">Register</a>
         </div>
       </div>
     {% endif %}

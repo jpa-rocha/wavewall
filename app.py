@@ -38,7 +38,42 @@ def error(message,number):
 
 @app.route("/synth", methods=["GET", "POST"])
 def synth():
-    return render_template("synth.html")
+    if request.method == "POST":
+        pass
+    
+    else:
+        try:
+            if session["user_id"]:
+                db = sqlite3.connect("wavewall.db")
+                db.row_factory = sqlite3.Row
+                ex = db.cursor()
+                row = ex.execute("SELECT username FROM users WHERE id = ?", (session["user_id"],))
+                r = row.fetchone()
+                r.keys()
+                username = r["username"]
+                return render_template("synth.html", **locals())
+        except:
+            return render_template("synth.html")
+
+
+@app.route("/user", methods=["GET", "POST"])
+def user():
+    if request.method == "POST":
+        pass
+    
+    else:
+        try:
+            if session["user_id"]:
+                db = sqlite3.connect("wavewall.db")
+                db.row_factory = sqlite3.Row
+                ex = db.cursor()
+                row = ex.execute("SELECT username FROM users WHERE id = ?", (session["user_id"],))
+                r = row.fetchone()
+                r.keys()
+                username = r["username"]
+                return render_template("user.html", **locals())
+        except:
+            return render_template("user.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -50,6 +85,7 @@ def login():
     if request.method == "POST":
         # Open db
         db = sqlite3.connect("wavewall.db")
+        db.row_factory = sqlite3.Row
         ex = db.cursor()
         username = request.form.get("username")
         hashpass = generate_password_hash(request.form.get("password"))
@@ -63,24 +99,36 @@ def login():
             return error("must provide password", 403)
 
         # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username =?",
+        rows = ex.execute("SELECT * FROM users WHERE username =?",
                           (username,))
 
         # Ensure username exists and password is correct
-        print(rows.fetchall()[1])
-        #checker = rows.fe
-        #if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-        #    return error("invalid username and/or password", 403)
+        r = rows.fetchone()
+        r.keys()
+
+        if r["username"] != username or check_password_hash(r["hash"], request.form.get("password")) == False:
+            return error("invalid username and/or password", 403)
 
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-
+        session["user_id"] = r["id"]
+        db.close()
         # Redirect user to home page
         return redirect("/synth")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
+
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/synth")
 
 
 @app.route("/register", methods=["GET", "POST"])

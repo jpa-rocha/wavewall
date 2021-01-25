@@ -51,6 +51,7 @@ def synth():
                 r = row.fetchone()
                 r.keys()
                 username = r["username"]
+                db.close()
                 return render_template("synth.html", **locals())
         except:
             return render_template("synth.html")
@@ -71,6 +72,7 @@ def user():
                 r = row.fetchone()
                 r.keys()
                 username = r["username"]
+                db.close()
                 return render_template("user.html", **locals())
         except:
             return render_template("user.html")
@@ -163,8 +165,6 @@ def register():
         list_rows = rows.fetchall()
         username_check = empty(list_rows)
         if username_check == False:
-            print("error")
-            print(list_rows)
             return error("username is taken", 403)
             
 

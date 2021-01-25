@@ -355,23 +355,26 @@ var notes = [
 ];
 function transposer() {
     var transpose = document.getElementById("transposer");
+    console.log(transpose.value)
     var i;
-    var ccount;
     var note;
-    for (i = 0; i < notes.lenght; i ++) {
-        console.log(i)
-        ccount = 0;
-        console.log(ccount);
-        var octave = transpose.value;
-        if  (notes[i][0] == "C" && note[i].lenght < 3) {
+    var octave;
+    var checker;
+    var ccount = 0
+    for (i = 0; i < notes.length; i ++) {
+        
+        octave = transpose.value;
+        checker = notes[i];
+        if  (checker.charAt(0) == "C" && checker.length < 3) {
             ccount += 1;
         }
         if (ccount >= 2) {
             octave = Number(transpose.value) + 1
         }
         note = notes[i].slice(0,-1) + String(octave);
-        notes[notes.indexOf(i)] = note;
-        
+        console.log(note)
+        notes[i] = note;
+        console.log(notes[i])
     }
 }
 

@@ -21,9 +21,22 @@ const filterenv = new Tone.FrequencyEnvelope();
 filterenv.set({
     baseFrequency : 20
 })
+// Effects
+// Chorus
+const chorus = new Tone.Chorus();
+// Reverb
+const reverb = new Tone.Reverb();
+// Tremolo
+const tremolo = new Tone.Tremolo();
+// Vibrato 
+const vibrato = new Tone.Vibrato();
 filterenv.connect(filter.frequency)
-poly.connect(filter);
-filter.toDestination();
+var effects = [chorus, tremolo, reverb, vibrato]
+function effectselector() {
+    
+}
+poly.chain(filter, chorus, reverb, tremolo, vibrato, Tone.Destination);
+
 
 // Oscilloscope setup
 var oscilloscope = new Nexus.Oscilloscope('#oscilloscope')
@@ -342,7 +355,54 @@ releasef.oninput = function() {
     })
 }
 
+// Effect control
+// Chorus
+function chorusctr() {
+    var depth = document.getElementById("depthchorus");
+    var freq = document.getElementById("frequencychorus");
+    var delay = document.getElementById("delaychorus");
+    var amount = document.getElementById("wetchorus");
+    chorus.set({
+        depth : depth.value,
+        frequency : freq.value,
+        delayTime : delay.value,
+        wet : amount.value
+    });
+}
 
+// Reverb
+function reverbctr() {
+    var decay = document.getElementById("decayreverb");
+    var amount = document.getElementById("wetreverb");
+    reverb.set({
+        decay : decay.value,
+        wet : amount.value
+    })
+}
+
+// Tremolo
+function tremoloctr(){
+    var depth = document.getElementById("depthtremolo");
+    var freq = document.getElementById("freqtremolo");
+    var amount = document.getElementById("wettremolo");
+    tremolo.set({
+        depth : depth.value,
+        frequency : freq.value,
+        wet : amount.value
+    });
+}
+
+// Vibrato
+function vibratoctr(){
+    var depth = document.getElementById("depthvibrato");
+    var freq = document.getElementById("freqvibrato");
+    var amount = document.getElementById("wetvibrato" );
+    vibrato.set({
+        depth : depth.value,
+        frequency : freq.value,
+        wet : amount.value
+    });
+}
 
 // keyboard keys
 var QWERTZ = [
@@ -355,7 +415,6 @@ var notes = [
 ];
 function transposer() {
     var transpose = document.getElementById("transposer");
-    console.log(transpose.value)
     var i;
     var note;
     var octave;
@@ -372,9 +431,7 @@ function transposer() {
             octave = Number(transpose.value) + 1
         }
         note = notes[i].slice(0,-1) + String(octave);
-        console.log(note)
         notes[i] = note;
-        console.log(notes[i])
     }
 }
 
@@ -403,5 +460,6 @@ document.addEventListener("keyup", (event) => {
 
 // testing button
 function play(){
-    console.log(notes)
+    console.log(reverb.get())
+
   }

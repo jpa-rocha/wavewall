@@ -106,7 +106,7 @@
           </fieldset>
           <fieldset class="subgroupsliders">
           <legend>Cutoff</legend>
-             <input type="range" orient="vertical" min="20" step="1" max="20000" value="0" id="cutoff"/>   
+             <input type="range" min="20" step="1" max="20000" value="0" id="cutoff"/>   
             </fieldset>     
         </div>
       </fieldset>
@@ -130,9 +130,50 @@
       </fieldset>
         </fieldset>
       </div>  
+      <div class="col-l-2 col-3 col-s-4">
+        <fieldset class="fieldgroup">
+          <legend class="fieldlegend">Effects</legend>
+          <fieldset class="subgroupsliders" onclick="chorusctr()">
+            <legend><input type="checkbox" id="choruscheck"> Chorus</legend>
+            depth
+            <input type="range" min="0" step="0.1" max="1" value="0" id="depthchorus"/>
+            freq
+            <input type="range" min="0" step="1" max="30000" value="0" id="frequencychorus"/> 
+            delay
+            <input type="range" min="0" step="0.5" max="40" value="0" id="delaychorus"/>
+            amount
+            <input type="range" min="0" step="0.1" max="1" value="0" id="wetchorus"/> 
+          </fieldset>
+          <fieldset class="subgroupsliders" onclick="reverbctr()">
+            <legend><input type="checkbox" id="reverbcheck"> Reverb</legend> 
+            decay
+            <input type="range" min="0.001" step="0.1" max="10" value="0" id="decayreverb"/> 
+            amount
+            <input type="range" min="0" step="0.01" max="1" value="0" id="wetreverb"/>
+          </fieldset>
+          <fieldset class="subgroupsliders" onclick="tremoloctr()">
+            <legend><input type="checkbox" id="tremolocheck"> Tremolo</legend> 
+            depth
+            <input type="range" min="0" step="0.01" max="1" value="0" id="depthtremolo"/>  
+            freq    
+            <input type="range" min="0" step="0.01" max="1.99" value="0" id="freqtremolo"/> 
+            amount 
+            <input type="range" min="0" step="0.01" max="1" value="0" id="wettremolo"/> 
+          </fieldset>
+          <fieldset class="subgroupsliders" onclick="vibratoctr()">
+            <legend><input type="checkbox" id="vibratocheck"> Vibrato</legend>
+            depth
+            <input type="range" min="0" step="0.01" max="1" value="0" id="depthvibrato"/>
+             freq
+            <input type="range" min="0" step="0.01" max="1.99" value="0" id="freqvibrato"/> 
+            amount
+            <input type="range" min="0" step="0.01" max="1" value="0" id="wetvibrato"/>
+          </fieldset>
+        </fieldset>
+      </div>
       <button type="button" id="start">Start</button>
       <button type="button" id="playbtn" onclick="play()">Test</button>
-      <input type ="range" min="2" step="1" max ="6" value="4" id="transposer" onclick="transposer()"/> 
+      <input type ="range" min="2" step="1" max ="6" value="4" id="transposer" onclick="transposer()"/>
     </div>
     <div class="row">
       <div class="col-2" id="oscilloscope">

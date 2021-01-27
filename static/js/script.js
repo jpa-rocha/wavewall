@@ -24,18 +24,27 @@ filterenv.set({
 // Effects
 // Chorus
 const chorus = new Tone.Chorus();
+chorus.set({
+    wet : 0
+});
 // Reverb
 const reverb = new Tone.Reverb();
+reverb.set({
+    wet : 0
+});
 // Tremolo
 const tremolo = new Tone.Tremolo();
+tremolo.set({
+    wet : 0
+});
 // Vibrato 
 const vibrato = new Tone.Vibrato();
+vibrato.set({
+    wet : 0
+});
 filterenv.connect(filter.frequency)
-var effects = [chorus, tremolo, reverb, vibrato]
-function effectselector() {
-    
-}
-poly.chain(filter, chorus, reverb, tremolo, vibrato, Tone.Destination);
+
+poly.chain(filter, chorus, tremolo, reverb, vibrato, Tone.Destination);
 
 
 // Oscilloscope setup
@@ -356,52 +365,109 @@ releasef.oninput = function() {
 }
 
 // Effect control
+
 // Chorus
 function chorusctr() {
+    var choruscheck = document.getElementById("choruscheck");
     var depth = document.getElementById("depthchorus");
     var freq = document.getElementById("frequencychorus");
     var delay = document.getElementById("delaychorus");
     var amount = document.getElementById("wetchorus");
-    chorus.set({
-        depth : depth.value,
-        frequency : freq.value,
-        delayTime : delay.value,
-        wet : amount.value
-    });
+    if (choruscheck.checked == true) {
+        depth.disabled = false;
+        freq.disabled = false;
+        delay.disabled = false;
+        amount.disabled = false;
+        chorus.set({
+            depth : depth.value,
+            frequency : freq.value,
+            delayTime : delay.value,
+            wet : amount.value
+        });    
+    }
+    else {
+        depth.disabled = true;
+        freq.disabled = true;
+        delay.disabled = true;
+        amount.disabled = true;
+        chorus.set({
+            wet : 0
+        });
+    }
 }
 
 // Reverb
 function reverbctr() {
+    var reverbcheck = document.getElementById("reverbcheck");
     var decay = document.getElementById("decayreverb");
     var amount = document.getElementById("wetreverb");
-    reverb.set({
-        decay : decay.value,
-        wet : amount.value
-    })
+    if (reverbcheck.checked == true) {
+        decay.disabled = false;
+        amount.disabled = false;
+        reverb.set({
+            decay : decay.value,
+            wet : amount.value
+        });
+    }
+    else {
+        decay.disabled = true;
+        amount.disabled = true;
+        reverb.set({
+            wet : 0
+        });
+    }
 }
 
 // Tremolo
 function tremoloctr(){
+    var tremolocheck = document.getElementById("tremolocheck");
     var depth = document.getElementById("depthtremolo");
     var freq = document.getElementById("freqtremolo");
     var amount = document.getElementById("wettremolo");
-    tremolo.set({
-        depth : depth.value,
-        frequency : freq.value,
-        wet : amount.value
-    });
+    if (tremolocheck.checked == true){
+        depth.disabled = false;
+        freq.disabled = false;
+        amount.disabled = false;
+        tremolo.set({
+            depth : depth.value,
+            frequency : freq.value,
+            wet : amount.value
+        });
+    }
+    else {
+        depth.disabled = true;
+        freq.disabled = true;
+        amount.disabled = true;
+        tremolo.set({
+            wet : 0
+        });
+    }
 }
 
 // Vibrato
 function vibratoctr(){
+    var vibratocheck = document.getElementById("vibratocheck");
     var depth = document.getElementById("depthvibrato");
     var freq = document.getElementById("freqvibrato");
     var amount = document.getElementById("wetvibrato" );
-    vibrato.set({
-        depth : depth.value,
-        frequency : freq.value,
-        wet : amount.value
-    });
+    if (vibratocheck.checked == true){    
+        depth.disabled = false;
+        freq.disabled = false;
+        amount.disabled = false;
+        vibrato.set({
+            depth : depth.value,
+            frequency : freq.value,
+            wet : amount.value
+        });
+    }
+    else {
+        depth.disabled = true;
+        freq.disabled = true;
+        amount.disabled = true;
+        vibrato.set({
+            wet : 0
+        });
+    }
 }
 
 // keyboard keys

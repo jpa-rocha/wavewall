@@ -6,8 +6,6 @@ document.querySelector('#start')?.addEventListener('click', async () => {
     console.log('audio is ready')
 })
 //instrument setup
-const omni = new Tone.OmniOscillator();
-const synth = new Tone.MonoSynth();
 const poly = new Tone.PolySynth();
 poly.set({
     oscillator : {
@@ -19,38 +17,31 @@ poly.set({
 const filter = new Tone.Filter();
 const filterenv = new Tone.FrequencyEnvelope();
 filterenv.set({
-    baseFrequency : 20
+    baseFrequency : 5000
 })
+
 // Effects
 // Chorus
 const chorus = new Tone.Chorus();
 chorus.set({
     wet : 0
 });
+
 // Reverb
 const reverb = new Tone.Reverb();
 reverb.set({
     wet : 0
 });
-// Tremolo
-const tremolo = new Tone.Tremolo();
-tremolo.set({
-    wet : 0
-});
+
 // Vibrato 
 const vibrato = new Tone.Vibrato();
 vibrato.set({
     wet : 0
 });
+
 filterenv.connect(filter.frequency)
 
-poly.chain(filter, chorus, tremolo, reverb, vibrato, Tone.Destination);
-
-
-// Oscilloscope setup
-var oscilloscope = new Nexus.Oscilloscope('#oscilloscope')
-oscilloscope.connect(poly)
-oscilloscope.bufferLength = 64;
+poly.chain(filter, chorus, reverb, vibrato, Tone.Destination);
 
 // Values recieved from user input
 // Wave type for Oscillator
@@ -117,10 +108,10 @@ function fmopt(){
                   modulationType : checker.value
                 }
             });
-        }
+            }
         }
     }
-    }
+}
 
 
 // AM options
@@ -191,7 +182,6 @@ function rollopt() {
             filter.set({
                 rolloff : checker.value
             })
-            console.log(checker.value)
         }
     }
 }
@@ -199,10 +189,10 @@ function rollopt() {
 // Determine cutoff
 var cutoff = document.getElementById("cutoff");
 cutoff.oninput = function() {
-    filter.set({
-        frequency : this.value
-    })
-    }
+    filterenv.set({
+        baseFrequency : this.value
+    });
+}
 
 // Amplitude envelope control
 // Attack
@@ -328,32 +318,6 @@ function reverbctr() {
         decay.disabled = true;
         amount.disabled = true;
         reverb.set({
-            wet : 0
-        });
-    }
-}
-
-// Tremolo
-function tremoloctr(){
-    var tremolocheck = document.getElementById("tremolocheck");
-    var depth = document.getElementById("depthtremolo");
-    var freq = document.getElementById("freqtremolo");
-    var amount = document.getElementById("wettremolo");
-    if (tremolocheck.checked == true){
-        depth.disabled = false;
-        freq.disabled = false;
-        amount.disabled = false;
-        tremolo.set({
-            depth : depth.value,
-            frequency : freq.value,
-            wet : amount.value
-        });
-    }
-    else {
-        depth.disabled = true;
-        freq.disabled = true;
-        amount.disabled = true;
-        tremolo.set({
             wet : 0
         });
     }

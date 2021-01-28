@@ -22,6 +22,8 @@
             <legend>Type</legend>
               <label for="plain"><input id="plain" type="radio" name="type" value="" onclick="moddis()" checked>Plain</label>
               <br>
+              <label for="fat"><input id="fat" type="radio" name="type" value="fat" onclick="moddis()">FAT</label>
+              <br>
               <label for="fm"><input id="fm" type="radio" name="type" value="fm" onclick="moddis()">FM</label>
               <div>
                 <fieldset class="subgroup" id="fmfieldset" onclick="fmopt()" disabled>
@@ -30,10 +32,6 @@
                   <label for="fmsaw"><input id="fmsaw" type="radio" name="fm" value="sawtooth">Saw</label>
                   <label for="fmtriangle"><input id="fmtriangle" type="radio" name="fm" value="triangle">Triangle</label>  
                   <label for="fmsine"><input id="fmsine" type="radio" name="fm" value="sine">Sine</label>
-                  <input type="range" min="0" step="0.1" max="2" value="0" id="fmindex"/>
-                  <label for="fmindex">Frequency</label>
-                  <input type="range" min="1" step="0.1" max="1.99" value="1" id="fmharm"/>
-                  <label for="fmharm">Harmonicity</label>
                 </fieldset>  
               </div>
               <label for="am"><input id="am" type="radio" name="type" value="am" onclick="moddis()">AM</label>
@@ -44,27 +42,7 @@
                   <label for="amsaw"><input id="amsaw" type="radio" name="am" value="sawtooth">Saw</label>
                   <label for="amtriangle"><input id="amtriangle" type="radio" name="am" value="triangle">Triangle</label>  
                   <label for="amsine"><input id="amsine" type="radio" name="am" value="sine">Sine</label>
-                  <input type="range" min="1" step="0.1" max="1.99" value="1" id="amharm"/>
-                  <label for="amharm">Harmonicity</label>
                 </fieldset>
-              </div>
-              <label for="fat"><input id="fat" type="radio" name="type" value="fat" onclick="moddis()">FAT</label>
-              <div>
-                <fieldset class="subgroup" id="fatfieldset" onclick="FATopt()" disabled>
-                  <legend>Modulation</legend>
-                  <input type="range" min="1" step="1" max="5" value="1" id="fatcount"/>
-                  <label for="fatmod">Count</label>
-                  <input type="range" min="-100" step="10" max="10" value="-10" id="fatmod"/>
-                  <label for="fatmod">Detune</label>
-                </fieldset>  
-              </div>
-              <label for="pwm"><input id="pwm" type="radio" name="type" value="pwm" onclick="moddis()">PWM</label>
-              <div>
-                <fieldset class="subgroup" id="pwmfieldset" onclick="pwmopt()" disabled>
-                  <legend>Modulation</legend>
-                  <input type="range" min="-100" step="10" max="10" value="-10" id="pwmmod"/>
-                  <label for="pwmmod">Frequency</label>
-                </fieldset>  
               </div>
           </fieldset>
         </fieldset>

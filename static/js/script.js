@@ -55,7 +55,7 @@ oscilloscope.bufferLength = 64;
 // Values recieved from user input
 // Wave type for Oscillator
 function osc() {
-    var wavetype = ["plain", "fm", "am", "fat", "square", "saw", "triangle", "sine", "pwm"];
+    var wavetype = ["plain", "fat", "fm", "am", "square", "saw", "triangle", "sine"];
     var selection = [];
     var checker;
     var i;
@@ -63,14 +63,6 @@ function osc() {
         checker = document.getElementById(wavetype[i])
         if (checker.checked) {
             selection.push(checker.value)
-            if (checker.value == "pwm") {
-                poly.set({
-                    oscillator :{
-                      type : checker.value
-                    }
-                });
-                return;
-            }
         }}
         poly.set({
             oscillator :{
@@ -82,7 +74,7 @@ function osc() {
 // Modulation Options
 // Disabling unselected oscillator types
 function moddis(){
-    var options = ["plain", "fm", "am", "fat", "pwm"];
+    var options = ["fm", "am"];
     var i;
     var checker;
     for (i = 0; i < options.length; i++) {  
@@ -99,18 +91,6 @@ function moddis(){
             }
             if(options[i] != "am") {
                 document.getElementById("amfieldset").disabled = true;
-            }
-            if (options[i] == "fat") {
-                document.getElementById("fatfieldset").disabled = false;
-            }
-            if (options[i] != "fat") {
-                document.getElementById("fatfieldset").disabled = true;
-            }
-            if (options[i] == "pwm") {
-                document.getElementById("pwmfieldset").disabled = false;
-            }
-            if (options[i] != "pwm") {
-                document.getElementById("pwmfieldset").disabled = true;
             }
       }
     }
@@ -140,26 +120,6 @@ function fmopt(){
         }
         }
     }
-    // Index modulation
-    var fmindex = document.getElementById("fmindex");
-    fmindex.oninput = () => {
-      console.log(fmindex.value);
-      poly.set({
-        oscillator : {
-          modulationIndex : this.value
-        }
-      });
-    }
-    // Harmonicity modulation   
-    var fmharm = document.getElementById("fmharm");
-    fmharm.oninput = () => {
-      console.log(fmharm.value);
-      poly.set({
-        oscillator : {
-          harmonicity : this.value
-        }
-      });
-    }
     }
 
 
@@ -185,58 +145,13 @@ function amopt(){
             });
         }
         }
-    // harmonicity
-    var amharm = document.getElementById("amharm");
-    amharm.oninput = () => {
-      poly.set({
-        oscillator : {
-          harmonicity : this.value
-        }
-      });
-    }
     }
 }
 
-// FAT options
-function FATopt() {
-    checker = document.getElementById("fat");
-    if (checker.checked) {
-        var count = document.getElementById("fatcount");
-        console.log(count.value)
-        count.oninput = () => {
-            poly.set({
-                oscillator : {
-                    count : this.value
-                }
-            });
-        }
-        var detune = document.getElementById("fatmod");
-        detune.oninput = () => {
-            poly.set({
-                oscillator : {
-                    spread : this.value
-                }
-            });
-        }
-    }
+// FAT options -> disabled
 
-}
+// PWM options -> disabled
 
-// PWM options
-function pwmopt() {
-    checker = document.getElementById("pwm");
-    if (checker.checked) {
-        var mod = document.getElementById("pwmmod");
-        mod.oninput = () => {
-            poly.set({
-                oscillator : {
-                    modulationFrequency : this.value
-                }
-            });
-            console.log(mod.value)
-        }
-}
-}
 
 
 // Volume control

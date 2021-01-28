@@ -181,4 +181,17 @@ def register():
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    try:
+        if session["user_id"]:
+            db = sqlite3.connect("wavewall.db")
+            db.row_factory = sqlite3.Row
+            ex = db.cursor()
+            row = ex.execute("SELECT username FROM users WHERE id = ?", (session["user_id"],))
+            r = row.fetchone()
+            r.keys()
+            username = r["username"]
+            db.close()
+            return render_template("about.html", **locals())
+    except:
+        return render_template("about.html")
+    

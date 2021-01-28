@@ -186,7 +186,7 @@
 }
 
 .osc {
-  margin-left: 0.5em;
+  margin-left: 4em;
   text-align: center;
 }
 
@@ -194,6 +194,7 @@
   border-color:indigo;
   border-style: solid;
   border-width: thin;
+  margin-bottom: 0.5em;
 }
 
 .fieldlegend {

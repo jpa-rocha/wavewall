@@ -151,6 +151,7 @@ sourcevol.oninput = function() {
   poly.set({
     volume : this.value
   });
+  console.log(this.value)
   }
 
 

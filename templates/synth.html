@@ -7,7 +7,7 @@
 {% block main %}
     <div class="synth">
       <div class="row">
-        <div class="col-l-4 col-8 col-s-12 osc">
+        <div class="col-l-3 osc">
           <!-- Oscillator -->
           <fieldset class="fieldgroup">
             <legend class="fieldlegend">OSC</legend>
@@ -46,12 +46,8 @@
               </div>
           </fieldset>
         </fieldset>
-          <div class="volume">
-            <p>Volume</p>
-           <input type="range" orient="vertical" min="-100" step="1" max="10" value="-10" id="vol"/>
-          </div>
         </div>
-        <div class="col-l-2 col-2 col-s-3 filter">
+        <div class="col-l-2 filter">
           <!-- Filter -->
           <fieldset class="fieldgroup">
           <legend class="fieldlegend">Filter</legend>
@@ -88,7 +84,7 @@
             </fieldset>     
         </div>
       </fieldset>
-        <div class="col-l-2 col-3 col-s-4">
+        <div class="col-l-2">
           <!-- Envelopes -->
         <fieldset class="fieldgroup">
         <legend class="fieldlegend">Envelopes</legend>
@@ -108,7 +104,7 @@
       </fieldset>
         </fieldset>
       </div>  
-      <div class="col-l-2 col-3 col-s-4">
+      <div class="col-l-2">
         <fieldset class="fieldgroup">
           <legend class="fieldlegend">Effects</legend>
           <fieldset class="subgroupsliders" onclick="chorusctr()">
@@ -140,12 +136,18 @@
           </fieldset>
         </fieldset>
       </div>
-      <button type="button" id="start">Start</button>
-      <button type="button" id="playbtn" onclick="play()">Test</button>
-      <input type ="range" min="2" step="1" max ="6" value="4" id="transposer" onclick="transposer()"/>
-    </div>
-    <div class="row">
-      <div class="col-2" id="oscilloscope">
+      <div class="col-l-2">
+        <fieldset class="fieldgroup">
+          <legend class="fieldlegend">Control</legend>
+            <fieldset class="subgroupsliders" onclick="transposer()">
+              <legend>Transposer</legend>
+              <input type ="range" min="2" step="1" max ="6" value="4" id="transposer"/>
+            </fieldset>
+            <fieldset class="subgroupsliders">
+              <legend>Volume</legend>
+              <input type="range" min="-65" step="1" max="10" value="-10" id="vol"/>
+            </fieldset>
+        </fieldset>
       </div>
     </div>
     <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>

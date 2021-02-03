@@ -5,5 +5,19 @@
 {% endblock %}
 
 {% block main %}
-
+    <div class="row">
+        <div class="col-l-12">
+        <table>
+            <tr>
+                <th>Patch Name</th>
+                <th>Delete</th>
+            </tr>
+            {% for patch in patches %}
+            <tr>
+                <td>{{patch}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+    </div>
 {% endblock %}

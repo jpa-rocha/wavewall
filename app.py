@@ -39,8 +39,81 @@ def error(message,number):
 @app.route("/synth", methods=["GET", "POST"])
 def synth():
     if request.method == "POST":
-        pass
-    
+        # DB set up
+        db = sqlite3.connect("wavewall.db")
+        ex = db.cursor()
+        # Patch name
+        name = request.form.get("patchname")
+        # Oscillator waveform
+        waveform = request.form.get("wave")
+        # Oscilator type and modulation if appliable
+        wavetype = request.form.get("type")
+        if wavetype == "fm":
+            modulation = request.form.get("fm")
+        elif wavetype == "am":
+            modulation = request.form.get("am")
+        else:
+            modulation = ""
+        # Filter section
+        filterpass = request.form.get("filter")
+        rolloff = request.form.get("roll")
+        cutoff = request.form.get("cutoff")
+        # Envelopes
+        # Amplitude
+        ampa = request.form.get("attacka")
+        ampd = request.form.get("decaya")
+        amps = request.form.get("sustaina")
+        ampr = request.form.get("releasea")
+        # Filter
+        fila = request.form.get("attackf")
+        fild = request.form.get("decayf")
+        fils = request.form.get("sustainf")
+        filr = request.form.get("releasef")
+        # Effects
+        # Chorus
+        chorus = request.form.get("choruscheck")
+        depthchorus = request.form.get("depthchorus")
+        freqchorus = request.form.get("freqchorus")
+        delaychorus = request.form.get("delaychorus")
+        amountchorus = request.form.get("wetchorus")
+        # Reverb
+        reverb = request.form.get("reverbcheck")
+        decayreverb = request.form.get("decayreverb")
+        amountreverb = request.form.get("wetreverb")
+        # Vibrato
+        vibrato = request.form.get("vibratocheck")
+        depthvibrato = request.form.get("depthvibrato")
+        freqvibrato = request.form.get("freqvibrato")
+        amountvibrato = request.form.get("wetvibrato")
+        # Transposer
+        transposer = request.form.get("transposer")
+        # Volume
+        volume = request.form.get("vol")
+
+        # Patch must have a name
+        if not request.form.get("patchname"):
+            return error("must provide patch name", 403)
+
+        rows = ex.execute("SELECT * FROM patches WHERE name=?",
+                          (name, ))
+
+        #  Patch name needs to be unique
+        list_rows = rows.fetchall()
+        name_check = empty(list_rows)
+        if name_check == False:
+            return error("Patch name is taken", 403)
+        
+        ex.execute("INSERT INTO patches (user_id, name, waveform, type, modulation, filter, rolloff, \
+                    cutoff, ampa, ampd, amps, ampr, fila, fild, fils, filr, choruscheck, cdepth, cfreq, \
+                    cdelay, camount, reverbcheck, rdecay, ramount, vibratocheck, vdepth, vfreq, vamount, transposer, volume) \
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",\
+                    (session["user_id"], name, waveform, wavetype, modulation, filterpass, rolloff, cutoff, ampa, ampd, amps, ampr, \
+                    fila, fild, fils, filr, chorus, depthchorus, freqchorus, delaychorus, amountchorus, reverb, decayreverb, amountreverb, \
+                    vibrato, depthvibrato, freqvibrato, amountvibrato, transposer, volume))
+        db.commit()
+        db.close()
+
+        return render_template("synth.html")
     else:
         try:
             if session["user_id"]:
@@ -51,6 +124,13 @@ def synth():
                 r = row.fetchone()
                 r.keys()
                 username = r["username"]
+                patchesload = ex.execute("SELECT name FROM patches WHERE user_id = ?", (session["user_id"],))
+                p = patchesload.fetchall()
+                patches = []
+                for item in p:
+                    for patch in item:
+                        patches.append(patch)
+                
                 db.close()
                 return render_template("synth.html", **locals())
         except:
@@ -72,6 +152,12 @@ def user():
                 r = row.fetchone()
                 r.keys()
                 username = r["username"]
+                patchesload = ex.execute("SELECT name FROM patches WHERE user_id = ?", (session["user_id"],))
+                p = patchesload.fetchall()
+                patches = []
+                for item in p:
+                    for patch in item:
+                        patches.append(patch)
                 db.close()
                 return render_template("user.html", **locals())
         except:

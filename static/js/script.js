@@ -65,7 +65,7 @@ function osc() {
 // Modulation Options
 // Disabling unselected oscillator types
 function moddis(){
-    var options = ["fm", "am"];
+    var options = ["plain", "fat", "fm", "am"];
     var i;
     var checker;
     for (i = 0; i < options.length; i++) {  
@@ -276,7 +276,7 @@ releasef.oninput = function() {
 function chorusctr() {
     var choruscheck = document.getElementById("choruscheck");
     var depth = document.getElementById("depthchorus");
-    var freq = document.getElementById("frequencychorus");
+    var freq = document.getElementById("freqchorus");
     var delay = document.getElementById("delaychorus");
     var amount = document.getElementById("wetchorus");
     if (choruscheck.checked == true) {
@@ -381,9 +381,11 @@ function transposer() {
     }
 }
 
+var power = document.getElementById("power")
 var pressed = new Set();
-
-document.addEventListener("keydown", (event) => {
+if (power.checked == true) {
+    console.log("power on")
+    document.addEventListener("keydown", (event) => {
     if (QWERTZ.includes(event.key)) {
         pressed.add(event.key);
         if (pressed.has(event.key)) {
@@ -393,8 +395,8 @@ document.addEventListener("keydown", (event) => {
         poly.triggerAttack(notes[QWERTZ.indexOf(event.key)]);
         console.log(poly.activeVoices);
     }
-}})
-document.addEventListener("keyup", (event) => {
+    }})
+    document.addEventListener("keyup", (event) => {
     if (pressed.has(event.key)) {
         pressed.delete(event.key);
         poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
@@ -402,7 +404,8 @@ document.addEventListener("keyup", (event) => {
     if (pressed.has(event.key) == false) {
         poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
     }
-})
+    })
+}
 
 // testing button
 function play(){

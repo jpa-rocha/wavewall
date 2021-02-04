@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block main %}
-<form action="/synth" method="post">
+<form action="/synth" method="POST">
     <div class="synth">
       <div class="row">
         <div class="col-l-4 osc">
@@ -157,7 +157,7 @@
           </div>
           <button class="btn btn-primary" type="submit">Save</button>
         </form>
-        <form action="/synth" method="post"></form>
+        <form action="/synth" method="GET">
         <div class="patches">
           <select name="patches" id="patches" class="form-control">
             <option value="">Select Patch</option>

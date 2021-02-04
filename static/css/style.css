@@ -323,3 +323,11 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.userlist {
+  display: inline-block;
+}
+
+.listbutton {
+  float: right;
+}

@@ -7,17 +7,13 @@
 {% block main %}
     <div class="row">
         <div class="col-l-12">
-        <table>
-            <tr>
-                <th>Patch Name</th>
-                <th>Delete</th>
-            </tr>
-            {% for patch in patches %}
-            <tr>
-                <td>{{patch}}</td>
-            </tr>
-            {% endfor %}
-        </table>
+        <form action="/user" method="POST">
+            <ul class="userlist">
+                {% for patch in patches %}
+                    <li>{{patch}}</li><button type="submit" name="patch" class="listbutton" value="{{patch}}">Delete</button>
+                {% endfor %}
+            </ul>
+        </form>
         </div>
     </div>
 {% endblock %}

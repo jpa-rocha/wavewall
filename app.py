@@ -113,7 +113,7 @@ def synth():
         db.commit()
         db.close()
 
-        return render_template("synth.html")
+        return redirect(request.url)
     else:
         try:
             if session["user_id"]:
@@ -140,7 +140,19 @@ def synth():
 @app.route("/user", methods=["GET", "POST"])
 def user():
     if request.method == "POST":
-        pass
+        try:
+            if session["user_id"]:
+                patchname = request.form.get("patch")
+                db = sqlite3.connect("wavewall.db")
+                db.row_factory = sqlite3.Row
+                ex = db.cursor()
+                ex.execute("DELETE FROM patches WHERE user_id = ? AND name=?", (session["user_id"], patchname))
+                db.commit()
+                db.close()
+                return redirect(request.url)
+        except:
+            return render_template("user.html")
+        
     
     else:
         try:

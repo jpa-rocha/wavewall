@@ -39,81 +39,159 @@ def error(message,number):
 @app.route("/synth", methods=["GET", "POST"])
 def synth():
     if request.method == "POST":
-        # DB set up
-        db = sqlite3.connect("wavewall.db")
-        ex = db.cursor()
-        # Patch name
-        name = request.form.get("patchname")
-        # Oscillator waveform
-        waveform = request.form.get("wave")
-        # Oscilator type and modulation if appliable
-        wavetype = request.form.get("type")
-        if wavetype == "fm":
-            modulation = request.form.get("fm")
-        elif wavetype == "am":
-            modulation = request.form.get("am")
-        else:
-            modulation = ""
-        # Filter section
-        filterpass = request.form.get("filter")
-        rolloff = request.form.get("roll")
-        cutoff = request.form.get("cutoff")
-        # Envelopes
-        # Amplitude
-        ampa = request.form.get("attacka")
-        ampd = request.form.get("decaya")
-        amps = request.form.get("sustaina")
-        ampr = request.form.get("releasea")
-        # Filter
-        fila = request.form.get("attackf")
-        fild = request.form.get("decayf")
-        fils = request.form.get("sustainf")
-        filr = request.form.get("releasef")
-        # Effects
-        # Chorus
-        chorus = request.form.get("choruscheck")
-        depthchorus = request.form.get("depthchorus")
-        freqchorus = request.form.get("freqchorus")
-        delaychorus = request.form.get("delaychorus")
-        amountchorus = request.form.get("wetchorus")
-        # Reverb
-        reverb = request.form.get("reverbcheck")
-        decayreverb = request.form.get("decayreverb")
-        amountreverb = request.form.get("wetreverb")
-        # Vibrato
-        vibrato = request.form.get("vibratocheck")
-        depthvibrato = request.form.get("depthvibrato")
-        freqvibrato = request.form.get("freqvibrato")
-        amountvibrato = request.form.get("wetvibrato")
-        # Transposer
-        transposer = request.form.get("transposer")
-        # Volume
-        volume = request.form.get("vol")
+        if "postpatch" in request.form:
+            print("post patch test")
+            # DB set up
+            db = sqlite3.connect("wavewall.db")
+            ex = db.cursor()
+            # Patch name
+            name = request.form.get("patchname")
+            # Oscillator waveform
+            waveform = request.form.get("wave")
+            # Oscilator type and modulation if appliable
+            wavetype = request.form.get("type")
+            if wavetype == "fm":
+                modulation = request.form.get("fm")
+            elif wavetype == "am":
+                modulation = request.form.get("am")
+            else:
+                modulation = ""
+            # Filter section
+            filterpass = request.form.get("filter")
+            rolloff = request.form.get("roll")
+            cutoff = request.form.get("cutoff")
+            # Envelopes
+            # Amplitude
+            ampa = request.form.get("attacka")
+            ampd = request.form.get("decaya")
+            amps = request.form.get("sustaina")
+            ampr = request.form.get("releasea")
+            # Filter
+            fila = request.form.get("attackf")
+            fild = request.form.get("decayf")
+            fils = request.form.get("sustainf")
+            filr = request.form.get("releasef")
+            # Effects
+            # Chorus
+            chorus = request.form.get("choruscheck")
+            depthchorus = request.form.get("depthchorus")
+            freqchorus = request.form.get("freqchorus")
+            delaychorus = request.form.get("delaychorus")
+            amountchorus = request.form.get("wetchorus")
+            # Reverb
+            reverb = request.form.get("reverbcheck")
+            decayreverb = request.form.get("decayreverb")
+            amountreverb = request.form.get("wetreverb")
+            # Vibrato
+            vibrato = request.form.get("vibratocheck")
+            depthvibrato = request.form.get("depthvibrato")
+            freqvibrato = request.form.get("freqvibrato")
+            amountvibrato = request.form.get("wetvibrato")
+            # Transposer
+            transposer = request.form.get("transposer")
+            # Volume
+            volume = request.form.get("vol")
 
-        # Patch must have a name
-        if not request.form.get("patchname"):
-            return error("must provide patch name", 403)
+            # Patch must have a name
+            if not request.form.get("patchname"):
+                return error("must provide patch name", 403)
 
-        rows = ex.execute("SELECT * FROM patches WHERE name=?",
-                          (name, ))
+            rows = ex.execute("SELECT * FROM patches WHERE name=?",
+                            (name, ))
 
-        #  Patch name needs to be unique
-        list_rows = rows.fetchall()
-        name_check = empty(list_rows)
-        if name_check == False:
-            return error("Patch name is taken", 403)
+            #  Patch name needs to be unique
+            list_rows = rows.fetchall()
+            name_check = empty(list_rows)
+            if name_check == False:
+                return error("Patch name is taken", 403)
+
+            ex.execute("INSERT INTO patches (user_id, name, waveform, type, modulation, filter, rolloff, \
+                        cutoff, ampa, ampd, amps, ampr, fila, fild, fils, filr, choruscheck, cdepth, cfreq, \
+                        cdelay, camount, reverbcheck, rdecay, ramount, vibratocheck, vdepth, vfreq, vamount, transposer, volume) \
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",\
+                        (session["user_id"], name, waveform, wavetype, modulation, filterpass, rolloff, cutoff, ampa, ampd, amps, ampr, \
+                        fila, fild, fils, filr, chorus, depthchorus, freqchorus, delaychorus, amountchorus, reverb, decayreverb, amountreverb, \
+                        vibrato, depthvibrato, freqvibrato, amountvibrato, transposer, volume))
+            db.commit()
+            db.close()
+            return redirect(request.url)
         
-        ex.execute("INSERT INTO patches (user_id, name, waveform, type, modulation, filter, rolloff, \
-                    cutoff, ampa, ampd, amps, ampr, fila, fild, fils, filr, choruscheck, cdepth, cfreq, \
-                    cdelay, camount, reverbcheck, rdecay, ramount, vibratocheck, vdepth, vfreq, vamount, transposer, volume) \
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",\
-                    (session["user_id"], name, waveform, wavetype, modulation, filterpass, rolloff, cutoff, ampa, ampd, amps, ampr, \
-                    fila, fild, fils, filr, chorus, depthchorus, freqchorus, delaychorus, amountchorus, reverb, decayreverb, amountreverb, \
-                    vibrato, depthvibrato, freqvibrato, amountvibrato, transposer, volume))
-        db.commit()
-        db.close()
+        # Patch recovery
+        if "getpatch" in request.form:
+            # DB set up
+            db = sqlite3.connect("wavewall.db")
+            ex = db.cursor()
+            db.row_factory = sqlite3.Row
+            # Patch name
+            currentpatch = request.form.get("patches")
+            if currentpatch == "":
+                return redirect(request.url)
+            else:
+                # shows patch list with render_template
+                row = ex.execute("SELECT username FROM users WHERE id = ?", (session["user_id"],))
+                r = row.fetchone()
+                username = r[0]
+                patchesload = ex.execute("SELECT name FROM patches WHERE user_id = ?", (session["user_id"],))
+                p = patchesload.fetchall()
+                patches = []
+                for item in p:
+                    for patch in item:
+                        patches.append(patch)
 
-        return redirect(request.url)
+                patchcall = ex.execute("SELECT waveform, type, modulation, filter, rolloff, \
+                        cutoff, ampa, ampd, amps, ampr, fila, fild, fils, filr, choruscheck, cdepth, cfreq, \
+                        cdelay, camount, reverbcheck, rdecay, ramount, vibratocheck, vdepth, vfreq, vamount, transposer, volume\
+                        FROM patches WHERE name=?", (currentpatch,))
+                patch = patchcall.fetchone()
+            
+                # Oscillator waveform
+                waveform = request.form.get("wave")
+                # Oscilator type and modulation if appliable
+                wavetype = patch[0]
+                wavetype = patch[1] # can be empty
+                modulation = patch[2] # can be empty
+                # Filter section
+                filterpass = patch[3]
+                rolloff = patch[4]
+                cutoff = patch[5]
+                # Envelopes
+                # Amplitude
+                ampa = patch[6]
+                ampd = patch[7]
+                amps = patch[8]
+                ampr = patch[9]
+                # Filter
+                fila = patch[10]
+                fild = patch[11]
+                fils = patch[12]
+                filr = patch[13]
+                # Effects
+                # Chorus
+                chorus = patch[14]
+                depthchorus = patch[15]
+                freqchorus = patch[16]
+                delaychorus = patch[17]
+                amountchorus = patch[18]
+                # Reverb
+                reverb = patch[19]
+                decayreverb = patch[20]
+                amountreverb = patch[21]
+                # Vibrato
+                vibrato = patch[22]
+                depthvibrato = patch[23]
+                freqvibrato = patch[24]
+                amountvibrato = patch[25]
+                # Transposer
+                transposer = patch[26]
+                # Volume
+                volume = patch[27]
+
+                # Close db
+                db.close()
+
+                print(currentpatch)
+           
+                return render_template("synth.html", **locals())
     else:
         try:
             if session["user_id"]:

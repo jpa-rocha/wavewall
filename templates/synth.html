@@ -155,9 +155,7 @@
           <div class="form-group">
               <input autocomplete="off" autofocus class="form-control" name="patchname" placeholder="Patch name" type="text">
           </div>
-          <button class="btn btn-primary" type="submit">Save</button>
-        </form>
-        <form action="/synth" method="GET">
+          <button class="btn btn-primary" type="submit" name="postpatch">Save</button>
         <div class="patches">
           <select name="patches" id="patches" class="form-control">
             <option value="">Select Patch</option>
@@ -166,7 +164,10 @@
             <option value="{{patch}}">{{ patch }}</option>
             {% endfor %}
           </select>
-          <button type="submit" id="get">Get Patch</button>
+          <button type="submit" id="getpatch" name="getpatch" value="getpatch">Get Patch</button>
+          <div>
+            <p>Current patch: {{ currentpatch }}</p>
+          </div>
         </form>
         </div>
       </div>

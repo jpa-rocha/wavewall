@@ -385,6 +385,7 @@ var power = document.getElementById("power")
 var pressed = new Set();
 if (power.checked == true) {
     console.log("power on")
+}
     document.addEventListener("keydown", (event) => {
     if (QWERTZ.includes(event.key)) {
         pressed.add(event.key);
@@ -405,7 +406,7 @@ if (power.checked == true) {
         poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
     }
     })
-}
+
 
 // testing button
 function play(){

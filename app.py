@@ -39,6 +39,7 @@ def error(message,number):
 @app.route("/synth", methods=["GET", "POST"])
 def synth():
     if request.method == "POST":
+        load = False
         if "postpatch" in request.form:
             print("post patch test")
             # DB set up
@@ -118,6 +119,7 @@ def synth():
         
         # Patch recovery
         if "getpatch" in request.form:
+            load = True
             # DB set up
             db = sqlite3.connect("wavewall.db")
             ex = db.cursor()
@@ -145,14 +147,53 @@ def synth():
                 patch = patchcall.fetchone()
             
                 # Oscillator waveform
-                waveform = request.form.get("wave")
+                waveform = patch[0]
+                if waveform == "square":
+                    square = True
+                elif waveform == "sawtooth":
+                    sawtooth = True
+                elif waveform == "triangle":
+                    triangle = True
+                else:
+                    sine = True
                 # Oscilator type and modulation if appliable
-                wavetype = patch[0]
                 wavetype = patch[1] # can be empty
+                if wavetype == "":
+                    plain = True
+                elif wavetype == "fat":
+                    fat = True
+                elif wavetype == "fm":
+                    fm = True
+                else:
+                    am = True   
                 modulation = patch[2] # can be empty
+                if modulation == "square":
+                    modsquare = True
+                elif modulation == "sawtooth":
+                    modsawtooth = True
+                elif modulation == "triangle":
+                    modtriangle = True
+                else:
+                    modsine = True
                 # Filter section
                 filterpass = patch[3]
+                if filterpass == "lowpass":
+                    lowpass = True
+                elif filterpass == "bandpass":
+                    bandpass = True
+                else:
+                    highpass = True
+
                 rolloff = patch[4]
+                if rolloff == "-12":
+                    r12 = True
+                elif rolloff == "-24":
+                    r24 = True
+                elif rolloff == "-48":
+                    r48 = True
+                else:
+                    r96 = True
+                    
                 cutoff = patch[5]
                 # Envelopes
                 # Amplitude
@@ -190,7 +231,7 @@ def synth():
                 db.close()
 
                 print(currentpatch)
-           
+                print(depthchorus)
                 return render_template("synth.html", **locals())
     else:
         try:

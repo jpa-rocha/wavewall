@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block main %}
+{% if not load %}
 <form action="/synth" method="POST">
     <div class="synth">
       <div class="row">
@@ -110,21 +111,21 @@
           <legend class="fieldlegend">Effects</legend>
           <fieldset class="subgroupsliders" onclick="chorusctr()">
             <legend><input type="checkbox" id="choruscheck" name="choruscheck"> Chorus</legend>
-            <legend>Depth<input type="range" min="0" step="0.1" max="1" value="0" id="depthchorus" name="depthchorus" disabled/></legend>
-            <legend>Freq<input type="range" min="0" step="1" max="30000" value="0" id="freqchorus" name="freqchorus" disabled/></legend> 
-            <legend>Delay<input type="range" min="0" step="0.5" max="100" value="0" id="delaychorus" name="delaychorus" disabled/></legend>
-            <legend>Amount<input type="range" min="0" step="0.1" max="1" value="0" id="wetchorus" name="wetchorus" disabled/></legend> 
+            <legend>Depth<input type="range" min="0" step="0.1" max="1" value="0.5" id="depthchorus" name="depthchorus" disabled/></legend>
+            <legend>Freq<input type="range" min="0" step="1" max="30000" value="15000" id="freqchorus" name="freqchorus" disabled/></legend> 
+            <legend>Delay<input type="range" min="0" step="0.5" max="100" value="50" id="delaychorus" name="delaychorus" disabled/></legend>
+            <legend>Amount<input type="range" min="0" step="0.1" max="1" value="0.5" id="wetchorus" name="wetchorus" disabled/></legend> 
           </fieldset>
           <fieldset class="subgroupsliders" onclick="reverbctr()">
             <legend><input type="checkbox" id="reverbcheck" name="reverbcheck"> Reverb</legend> 
-            <legend>Decay<input type="range" min="0.001" step="0.1" max="10" value="0" id="decayreverb" name="decayreverb" disabled/></legend> 
-            <legend>Amount<input type="range" min="0" step="0.01" max="1" value="0" id="wetreverb" name="wetreverb" disabled/></legend>
+            <legend>Decay<input type="range" min="0.001" step="0.1" max="10" value="5" id="decayreverb" name="decayreverb" disabled/></legend> 
+            <legend>Amount<input type="range" min="0" step="0.01" max="1" value="0.5" id="wetreverb" name="wetreverb" disabled/></legend>
           </fieldset>
           <fieldset class="subgroupsliders" onclick="vibratoctr()">
             <legend><input type="checkbox" id="vibratocheck" name="vibratocheck"> Vibrato</legend>
-            <legend>Depth<input type="range" min="0" step="0.01" max="1" value="0" id="depthvibrato" name="depthvibrato" disabled/></legend>
-            <legend>Freq<input type="range" min="0" step="0.01" max="1.99" value="0" id="freqvibrato" name="freqvibrato" disabled/></legend> 
-            <legend>Amount<input type="range" min="0" step="0.01" max="1" value="0" id="wetvibrato" name="wetvibrato" disabled/></legend>
+            <legend>Depth<input type="range" min="0" step="0.01" max="1" value="0.5" id="depthvibrato" name="depthvibrato" disabled/></legend>
+            <legend>Freq<input type="range" min="0" step="0.01" max="1.99" value="0.99" id="freqvibrato" name="freqvibrato" disabled/></legend> 
+            <legend>Amount<input type="range" min="0" step="0.01" max="1" value="0.5" id="wetvibrato" name="wetvibrato" disabled/></legend>
           </fieldset>
         </fieldset>
       </div>
@@ -173,6 +174,204 @@
       </div>
     </div>
     {% endif %}
-    
     <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% endif %}
+    {% if load %}
+    <form action="/synth" method="POST">
+      <div class="synth">
+        <div class="row">
+          <div class="col-l-4 osc">
+            <!-- Oscillator -->
+            <fieldset class="fieldgroup">
+              <legend class="fieldlegend">OSC</legend>
+            <fieldset class="subgroup" onclick="osc()">
+              <legend>Waveform</legend>
+              <label for="square"><input id="square" type="radio" name="wave" value="square"{{ "checked" if square }}>Square</label>
+              <label for="saw"><input id="saw" type="radio" name="wave" value="sawtooth" {{ "checked" if sawtooth}}>Saw</label>
+              <label for="triangle"><input id="triangle" type="radio" name="wave" value="triangle" {{ "checked" if triangle}}>Triangle</label>  
+              <label for="sine"><input id="sine" type="radio" name="wave" value="sine" {{ "checked" if sine}}>Sine</label>
+            </fieldset>  
+            <fieldset class="subgroup" onclick="osc()">
+              <legend>Type</legend>
+                <label for="plain"><input id="plain" type="radio" name="type" value="" onclick="moddis()" {{ "checked" if plain }}>Plain</label>
+                <br>
+                <label for="fat"><input id="fat" type="radio" name="type" value="fat" onclick="moddis()" {{ "checked" if fat }}>FAT</label>
+                <br>
+                <label for="fm"><input id="fm" type="radio" name="type" value="fm" onclick="moddis()" {{ "checked" if fm }}>FM</label>
+                <div>
+                  <fieldset class="subgroup" id="fmfieldset" onclick="fmopt()" {{ "enabled" if fm else "disabled" }}>
+                    <legend>Modulation</legend>
+                    <label for="fmsquare"><input id="fmsquare" type="radio" name="fm" value="square" {{ "checked" if fm and modsquare }}>Square</label>
+                    <label for="fmsaw"><input id="fmsaw" type="radio" name="fm" value="sawtooth" {{ "checked" if fm and modswatooth }}>Saw</label>
+                    <label for="fmtriangle"><input id="fmtriangle" type="radio" name="fm" value="triangle" {{ "checked" if fm and modtriangle }}>Triangle</label>  
+                    <label for="fmsine"><input id="fmsine" type="radio" name="fm" value="sine" {{ "checked" if fm and modsine }}>Sine</label>
+                  </fieldset>  
+                </div>
+                <label for="am"><input id="am" type="radio" name="type" value="am" onclick="moddis()" {{ "checked" if am }}>AM</label>
+                <div >
+                  <fieldset class="subgroup" id="amfieldset" onclick="amopt()"{{ "enabled" if am else "disabled" }}>
+                    <legend>Modulation</legend>
+                    <label for="amsquare"><input id="amsquare" type="radio" name="am" value="square" {{ "checked" if am and modsquare }}>Square</label>
+                    <label for="amsaw"><input id="amsaw" type="radio" name="am" value="sawtooth" {{ "checked" if am and modswatooth }}>Saw</label>
+                    <label for="amtriangle"><input id="amtriangle" type="radio" name="am" value="triangle" {{ "checked" if am and modtriangle }}>Triangle</label>  
+                    <label for="amsine"><input id="amsine" type="radio" name="am" value="sine" {{ "checked" if am and modsine }}>Sine</label>
+                  </fieldset>
+                </div>
+            </fieldset>
+          </fieldset>
+          </div>
+          <div class="col-l-2 filter">
+            <!-- Filter -->
+            <fieldset class="fieldgroup">
+            <legend class="fieldlegend">Filter</legend>
+            <fieldset class="subgroup" onclick="filtopt()">
+              <legend>Pass</legend>
+              <div class="passel">
+              <label for="lowpass"><input id="lowpass" type="radio" name="filter" value="lowpass" {{ "checked" if lowpass }}>Low-pass</label>
+              </div>
+              <div class="passel">
+                <label for="bandpass"><input id="bandpass" type="radio" name="filter" value="bandpass" {{ "checked" if bandpass }}>Band-pass</label>
+                </div>
+              <div class="passel">
+              <label for="highpass"><input id="highpass" type="radio" name="filter" value="highpass" {{ "checked" if highpass }}>High-pass</label>
+              </div>
+            </fieldset>
+            <fieldset class="subgroup" onclick="rollopt()" id="rolloff">
+              <legend>Roll-off</legend>
+              <div class="passel">
+              <label for="-12"><input id="r12" type="radio" name="roll" value="-12" {{ "checked" if r12 }}>-12</label>
+              </div>
+              <div class="passel">
+                <label for="-24"><input id="r24" type="radio" name="roll" value="-24" {{ "checked" if r24 }}>-24</label>
+                </div>
+              <div class="passel">
+              <label for="-48"><input id="r48" type="radio" name="roll" value="-48" {{ "checked" if r48 }}>-48</label>
+              </div>
+              <div class="passel">
+                <label for="-96"><input id="r96" type="radio" name="roll" value="-96" {{ "checked" if r96 }}>-96</label>
+                </div>
+            </fieldset>
+            <fieldset class="subgroupsliders">
+            <legend>Cutoff</legend>
+               <input type="range" min="1" step="1" max="10000" value="{{cutoff}}" id="cutoff" name="cutoff"/>   
+              </fieldset>     
+          </div>
+        </fieldset>
+          <div class="col-l-2">
+            <!-- Envelopes -->
+          <fieldset class="fieldgroup">
+          <legend class="fieldlegend">Envelopes</legend>
+          <fieldset class="subgroupsliders">
+            <legend>Amplitude</legend>
+          A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="{{ampa}}" id="attacka" name="attacka"/>
+          D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="{{ampd}}" id="decaya" name="decaya"/> 
+          S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="{{amps}}" id="sustaina" name="sustaina"/> 
+          R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="{{ampr}}" id="releasea" name="releasea"/> 
+        </fieldset>
+        <fieldset class="subgroupsliders">
+          <legend>Filter</legend>
+          A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="{{fila}}" id="attackf" name="attackf"/>
+          D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="{{fild}}" id="decayf" name="decayf"/> 
+          S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="{{fils}}" id="sustainf" name="sustainf"/> 
+          R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="{{filr}}" id="releasef" name="releasef"/> 
+        </fieldset>
+          </fieldset>
+        </div>  
+        <div class="col-l-2">
+          <fieldset class="fieldgroup">
+            <legend class="fieldlegend">Effects</legend>
+            {% if chorus %}
+            <fieldset class="subgroupsliders" onclick="chorusctr()">
+              <legend><input type="checkbox" id="choruscheck" name="choruscheck" checked> Chorus</legend>
+              <legend>Depth<input type="range" min="0" step="0.1" max="1" value="{{depthchorus}}" id="depthchorus" name="depthchorus"/></legend>
+              <legend>Freq<input type="range" min="0" step="1" max="30000" value="{{freqchorus}}" id="freqchorus" name="freqchorus"/></legend> 
+              <legend>Delay<input type="range" min="0" step="0.5" max="100" value="{{delaychorus}}" id="delaychorus" name="delaychorus"/></legend>
+              <legend>Amount<input type="range" min="0" step="0.1" max="1" value="{{amountchorus}}" id="wetchorus" name="wetchorus"/></legend> 
+            </fieldset>
+            {% else %}
+            <fieldset class="subgroupsliders" onclick="chorusctr()">
+              <legend><input type="checkbox" id="choruscheck" name="choruscheck"> Chorus</legend>
+              <legend>Depth<input type="range" min="0" step="0.1" max="1" value="{{depthchorus}}" id="depthchorus" name="depthchorus" disabled/></legend>
+              <legend>Freq<input type="range" min="0" step="1" max="30000" value="{{freqchorus}}" id="freqchorus" name="freqchorus" disabled/></legend> 
+              <legend>Delay<input type="range" min="0" step="0.5" max="100" value="{{delaychorus}}" id="delaychorus" name="delaychorus" disabled/></legend>
+              <legend>Amount<input type="range" min="0" step="0.1" max="1" value="{{amountchorus}}" id="wetchorus" name="wetchorus" disabled/></legend> 
+            </fieldset>
+            {% endif %}
+            {% if reverb %}
+            <fieldset class="subgroupsliders" onclick="reverbctr()" checked>
+              <legend><input type="checkbox" id="reverbcheck" name="reverbcheck"> Reverb</legend> 
+              <legend>Decay<input type="range" min="0.001" step="0.1" max="10" value="{{decayreverb}}" id="decayreverb" name="decayreverb"/></legend> 
+              <legend>Amount<input type="range" min="0" step="0.01" max="1" value="{{amountreverb}}" id="wetreverb" name="wetreverb"/></legend>
+            </fieldset>
+            {% else %}
+            <fieldset class="subgroupsliders" onclick="reverbctr()">
+              <legend><input type="checkbox" id="reverbcheck" name="reverbcheck"> Reverb</legend> 
+              <legend>Decay<input type="range" min="0.001" step="0.1" max="10" value="{{decayreverb}}" id="decayreverb" name="decayreverb" disabled/></legend> 
+              <legend>Amount<input type="range" min="0" step="0.01" max="1" value="{{amountreverb}}" id="wetreverb" name="wetreverb" disabled/></legend>
+            </fieldset>
+            {% endif %}
+            {% if vibrato %}
+            <fieldset class="subgroupsliders" onclick="vibratoctr()" checked>
+              <legend><input type="checkbox" id="vibratocheck" name="vibratocheck"> Vibrato</legend>
+              <legend>Depth<input type="range" min="0" step="0.01" max="1" value="{{depthvibrato}}" id="depthvibrato" name="depthvibrato"/></legend>
+              <legend>Freq<input type="range" min="0" step="0.01" max="1.99" value="{{freqvibrato}}" id="freqvibrato" name="freqvibrato"/></legend> 
+              <legend>Amount<input type="range" min="0" step="0.01" max="1" value="{{amountvibrato}}" id="wetvibrato" name="wetvibrato"/></legend>
+            </fieldset>
+            {% else %}
+            <fieldset class="subgroupsliders" onclick="vibratoctr()">
+              <legend><input type="checkbox" id="vibratocheck" name="vibratocheck"> Vibrato</legend>
+              <legend>Depth<input type="range" min="0" step="0.01" max="1" value="{{depthvibrato}}" id="depthvibrato" name="depthvibrato" disabled/></legend>
+              <legend>Freq<input type="range" min="0" step="0.01" max="1.99" value="{{freqvibrato}}" id="freqvibrato" name="freqvibrato" disabled/></legend> 
+              <legend>Amount<input type="range" min="0" step="0.01" max="1" value="{{amountvibrato}}" id="wetvibrato" name="wetvibrato" disabled/></legend>
+            </fieldset>
+            {% endif %}
+          </fieldset>
+        </div>
+        <div class="col-l-2">
+          <fieldset class="fieldgroup">
+            <legend class="fieldlegend">Control</legend>
+              <fieldset class="subgroupsliders">
+                <legend>Power</legend>
+                <label class="switch">
+                  <input type="checkbox" id="power">
+                  <span class="slider round"></span>
+                </label>
+              </fieldset>
+              <fieldset class="subgroupsliders" onclick="transposer()">
+                <legend>Transposer</legend>
+                <input type ="range" min="2" step="1" max ="6" value="{{transposer}}" id="transposer" name="transposer"/>
+              </fieldset>
+              <fieldset class="subgroupsliders">
+                <legend>Volume</legend>
+                <input type="range" min="-65" step="1" max="10" value="{{volume}}" id="vol" name="vol"/>
+              </fieldset>
+          </fieldset>
+        </div>
+      </div>
+      {% if session.user_id %}
+      <div class="row">
+        <div class="col-l-12">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="patchname" placeholder="Patch name" type="text">
+            </div>
+            <button class="btn btn-primary" type="submit" name="postpatch">Save</button>
+          <div class="patches">
+            <select name="patches" id="patches" class="form-control">
+              <option value="">Select Patch</option>
+              <!--Jinja for loop for -->
+              {% for patch in patches %}
+              <option value="{{patch}}">{{ patch }}</option>
+              {% endfor %}
+            </select>
+            <button type="submit" id="getpatch" name="getpatch" value="getpatch">Get Patch</button>
+            <div>
+              <p>Current patch: {{ currentpatch }}</p>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+      {% endif %}
 {% endblock %}

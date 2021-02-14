@@ -11,7 +11,7 @@
       
       <title>WAVEWALL: {% block title %}{% endblock %}</title>
   </head>
-  <body id="mainpagebody">
+  <body id="mainpagebody" onload="patchload()">
     <div class="gridwrapper">
     {% if session.user_id %}
       <div class="row nav">

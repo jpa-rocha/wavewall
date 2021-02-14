@@ -146,13 +146,12 @@ function amopt(){
 
 
 // Volume control
-var sourcevol = document.getElementById("vol");
-sourcevol.oninput = function() {
+function volumectr() {
+var sourcevol = document.getElementById("vol")
   poly.set({
-    volume : this.value
+    volume : sourcevol.value
   });
-  console.log(this.value)
-  }
+}
 
 
 // Values for Filter
@@ -188,87 +187,44 @@ function rollopt() {
 }
 
 // Determine cutoff
-var cutoff = document.getElementById("cutoff");
-cutoff.oninput = function() {
+function cutoffctr() {
+    var co = document.getElementById("cutoff")
     filterenv.set({
-        baseFrequency : this.value
+        baseFrequency : co.value
     });
 }
 
 // Amplitude envelope control
-// Attack
-var attacka = document.getElementById("attacka");
-attacka.oninput = function() {
-  poly.set({
-      envelope : {
-        attack : this.value
-      }
-    });
-}
-
-// Decay
-var decaya = document.getElementById("decaya");
-decaya.oninput = function() {
-  poly.set({
-      envelope : {
-        decay : this.value
-      }
-  });
-}
-
-// Sustain
-var sustaina = document.getElementById("sustaina");
-sustaina.oninput = function() {
-  poly.set({
-      envelope : {
-        sustain : this.value
-      }
-  });
-}
-
-// Release
-var releasea = document.getElementById("releasea");
-releasea.oninput = function() {
-  poly.set({
-      envelope : {
-        release : this.value
-      }
-  });
-}
+function ampenvctr() {
+    var attacka = document.getElementById("attacka");
+    var decaya = document.getElementById("decaya");
+    var sustaina = document.getElementById("sustaina");
+    var releasea = document.getElementById("releasea");
+    poly.set({
+        envelope : {
+            attack : attacka.value,
+            decay : decaya.value,
+            sustain : sustaina.value,
+            release : releasea.value
+        }
+        });
+    }
 
 
 // Filter envelope control
-// Attack
-var attackf = document.getElementById("attackf");
-attackf.oninput = function() {
-    filterenv.set({
-        attack : this.value
-    })
+function filenvctr() {
+    var attackf = document.getElementById("attackf");
+    var decayf = document.getElementById("decayf");
+    var sustainf = document.getElementById("sustainf");
+    var releasef = document.getElementById("releasef");
+        filterenv.set({
+            attack : attackf.value,
+            decay : decayf.value,
+            sustain : sustainf.value,
+            release : releasef.value
+        })
 }
 
-// Decay
-var decayf = document.getElementById("decayf");
-decayf.oninput = function() {
-    filterenv.set({
-        decay : this.value
-    })
-}
-
-// Sustain
-var sustainf = document.getElementById("sustainf");
-sustainf.oninput = function() {
-    filterenv.set({
-        sustain : this.value
-    })
-}
-
-// Release
-var releasef = document.getElementById("releasef");
-releasef.oninput = function() {
-    filterenv.set({
-        release : this.value
-    })
-}
 
 // Effect control
 
@@ -359,7 +315,7 @@ var QWERTZ = [
 var notes = [
     "C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", "C5"
 ];
-function transposer() {
+function transposerctr() {
     var transpose = document.getElementById("transposer");
     var i;
     var note;
@@ -382,10 +338,10 @@ function transposer() {
 }
 
 var power = document.getElementById("power")
-var pressed = new Set();
 if (power.checked == true) {
     console.log("power on")
 }
+var pressed = new Set();
     document.addEventListener("keydown", (event) => {
     if (QWERTZ.includes(event.key)) {
         pressed.add(event.key);
@@ -408,8 +364,20 @@ if (power.checked == true) {
     })
 
 
-// testing button
-function play(){
-    console.log(reverb.get())
-
+// Load function
+function patchload(){
+    osc();
+    moddis();
+    fmopt();
+    amopt();
+    filtopt();
+    rollopt();
+    cutoffctr();
+    ampenvctr();
+    filenvctr();
+    chorusctr();
+    reverbctr();
+    vibratoctr();
+    transposerctr();
+    volumectr();
   }

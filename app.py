@@ -193,7 +193,7 @@ def synth():
                     r48 = True
                 else:
                     r96 = True
-                    
+
                 cutoff = patch[5]
                 # Envelopes
                 # Amplitude
@@ -229,9 +229,6 @@ def synth():
 
                 # Close db
                 db.close()
-
-                print(currentpatch)
-                print(depthchorus)
                 return render_template("synth.html", **locals())
     else:
         try:

@@ -80,7 +80,7 @@
               <label for="-96"><input id="r96" type="radio" name="roll" value="-96">-96</label>
               </div>
           </fieldset>
-          <fieldset class="subgroupsliders">
+          <fieldset class="subgroupsliders" onclick="cutoffctr()">
           <legend>Cutoff</legend>
              <input type="range" min="1" step="1" max="10000" value="5000" id="cutoff" name="cutoff"/>   
             </fieldset>     
@@ -90,19 +90,19 @@
           <!-- Envelopes -->
         <fieldset class="fieldgroup">
         <legend class="fieldlegend">Envelopes</legend>
-        <fieldset class="subgroupsliders">
+        <fieldset class="subgroupsliders" onclick="ampenvctr()">
           <legend>Amplitude</legend>
-        A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0" id="attacka" name="attacka"/>
-        D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0" id="decaya" name="decaya"/> 
-        S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="0" id="sustaina" name="sustaina"/> 
-        R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="0" id="releasea" name="releasea"/> 
+        A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0.99" id="attacka" name="attacka"/>
+        D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0.99" id="decaya" name="decaya"/> 
+        S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="0.5" id="sustaina" name="sustaina"/> 
+        R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="2.49" id="releasea" name="releasea"/> 
       </fieldset>
-      <fieldset class="subgroupsliders">
+      <fieldset class="subgroupsliders" onclick="filenvctr()">
         <legend>Filter</legend>
-        A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0" id="attackf" name="attackf"/>
-        D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0" id="decayf" name="decayf"/> 
-        S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="0" id="sustainf" name="sustainf"/> 
-        R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="0" id="releasef" name="releasef"/> 
+        A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0.99" id="attackf" name="attackf"/>
+        D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="0.99" id="decayf" name="decayf"/> 
+        S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="0.5" id="sustainf" name="sustainf"/> 
+        R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="2.49" id="releasef" name="releasef"/> 
       </fieldset>
         </fieldset>
       </div>  
@@ -139,11 +139,11 @@
                 <span class="slider round"></span>
               </label>
             </fieldset>
-            <fieldset class="subgroupsliders" onclick="transposer()">
+            <fieldset class="subgroupsliders" onclick="transposerctr()">
               <legend>Transposer</legend>
               <input type ="range" min="2" step="1" max ="6" value="4" id="transposer" name="transposer"/>
             </fieldset>
-            <fieldset class="subgroupsliders">
+            <fieldset class="subgroupsliders" onclick="volumectr()">
               <legend>Volume</legend>
               <input type="range" min="-65" step="1" max="10" value="-10" id="vol" name="vol"/>
             </fieldset>
@@ -251,7 +251,7 @@
                 <label for="-96"><input id="r96" type="radio" name="roll" value="-96" {{ "checked" if r96 }}>-96</label>
                 </div>
             </fieldset>
-            <fieldset class="subgroupsliders">
+            <fieldset class="subgroupsliders" onclick="cutoffctr()">
             <legend>Cutoff</legend>
                <input type="range" min="1" step="1" max="10000" value="{{cutoff}}" id="cutoff" name="cutoff"/>   
               </fieldset>     
@@ -261,14 +261,14 @@
             <!-- Envelopes -->
           <fieldset class="fieldgroup">
           <legend class="fieldlegend">Envelopes</legend>
-          <fieldset class="subgroupsliders">
+          <fieldset class="subgroupsliders" onclick="ampenvctr()">
             <legend>Amplitude</legend>
           A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="{{ampa}}" id="attacka" name="attacka"/>
           D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="{{ampd}}" id="decaya" name="decaya"/> 
           S<input type="range" orient="vertical" min="0" step="0.01" max="1" value="{{amps}}" id="sustaina" name="sustaina"/> 
           R<input type="range" orient="vertical" min="0" step="0.01" max="4.99" value="{{ampr}}" id="releasea" name="releasea"/> 
         </fieldset>
-        <fieldset class="subgroupsliders">
+        <fieldset class="subgroupsliders" onclick="filenvctr()">
           <legend>Filter</legend>
           A<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="{{fila}}" id="attackf" name="attackf"/>
           D<input type="range" orient="vertical" min="0" step="0.01" max="1.99" value="{{fild}}" id="decayf" name="decayf"/> 
@@ -298,8 +298,8 @@
             </fieldset>
             {% endif %}
             {% if reverb %}
-            <fieldset class="subgroupsliders" onclick="reverbctr()" checked>
-              <legend><input type="checkbox" id="reverbcheck" name="reverbcheck"> Reverb</legend> 
+            <fieldset class="subgroupsliders" onclick="reverbctr()">
+              <legend><input type="checkbox" id="reverbcheck" name="reverbcheck" checked> Reverb</legend> 
               <legend>Decay<input type="range" min="0.001" step="0.1" max="10" value="{{decayreverb}}" id="decayreverb" name="decayreverb"/></legend> 
               <legend>Amount<input type="range" min="0" step="0.01" max="1" value="{{amountreverb}}" id="wetreverb" name="wetreverb"/></legend>
             </fieldset>
@@ -311,8 +311,8 @@
             </fieldset>
             {% endif %}
             {% if vibrato %}
-            <fieldset class="subgroupsliders" onclick="vibratoctr()" checked>
-              <legend><input type="checkbox" id="vibratocheck" name="vibratocheck"> Vibrato</legend>
+            <fieldset class="subgroupsliders" onclick="vibratoctr()">
+              <legend><input type="checkbox" id="vibratocheck" name="vibratocheck" checked> Vibrato</legend>
               <legend>Depth<input type="range" min="0" step="0.01" max="1" value="{{depthvibrato}}" id="depthvibrato" name="depthvibrato"/></legend>
               <legend>Freq<input type="range" min="0" step="0.01" max="1.99" value="{{freqvibrato}}" id="freqvibrato" name="freqvibrato"/></legend> 
               <legend>Amount<input type="range" min="0" step="0.01" max="1" value="{{amountvibrato}}" id="wetvibrato" name="wetvibrato"/></legend>
@@ -337,11 +337,11 @@
                   <span class="slider round"></span>
                 </label>
               </fieldset>
-              <fieldset class="subgroupsliders" onclick="transposer()">
+              <fieldset class="subgroupsliders" onclick="transposerctr()">
                 <legend>Transposer</legend>
                 <input type ="range" min="2" step="1" max ="6" value="{{transposer}}" id="transposer" name="transposer"/>
               </fieldset>
-              <fieldset class="subgroupsliders">
+              <fieldset class="subgroupsliders" onclick="volumectr()">
                 <legend>Volume</legend>
                 <input type="range" min="-65" step="1" max="10" value="{{volume}}" id="vol" name="vol"/>
               </fieldset>

@@ -135,7 +135,7 @@
             <fieldset class="subgroupsliders">
               <legend>Power</legend>
               <label class="switch">
-                <input type="checkbox" id="power">
+                <input type="checkbox" id="power" onclick="powercheck()">
                 <span class="slider round"></span>
               </label>
             </fieldset>
@@ -154,7 +154,7 @@
     <div class="row">
       <div class="col-l-12">
           <div class="form-group">
-              <input autocomplete="off" autofocus class="form-control" name="patchname" placeholder="Patch name" type="text">
+              <input autocomplete="off" autofocus class="form-control" name="patchname" placeholder="Patch name" type="text" maxlength = "75">
           </div>
           <button class="btn btn-primary" type="submit" name="postpatch">Save</button>
         <div class="patches">
@@ -333,7 +333,7 @@
               <fieldset class="subgroupsliders">
                 <legend>Power</legend>
                 <label class="switch">
-                  <input type="checkbox" id="power">
+                  <input type="checkbox" id="power" onclick="powercheck()">
                   <span class="slider round"></span>
                 </label>
               </fieldset>
@@ -352,7 +352,7 @@
       <div class="row">
         <div class="col-l-12">
             <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="patchname" placeholder="Patch name" type="text">
+                <input autocomplete="off" autofocus class="form-control" name="patchname" placeholder="Patch name" type="text" maxlength = "75">
             </div>
             <button class="btn btn-primary" type="submit" name="postpatch">Save</button>
           <div class="patches">

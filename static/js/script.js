@@ -1,10 +1,10 @@
 // MIDI setup
 
 //attach a click listener to a play button
-document.querySelector('#start')?.addEventListener('click', async () => {
-    await Tone.start()
-    console.log('audio is ready')
-})
+//document.querySelector('#start')?.addEventListener('click', async () => {
+  //  await Tone.start()
+    //console.log('audio is ready')
+//})
 //instrument setup
 const poly = new Tone.PolySynth();
 poly.set({
@@ -41,7 +41,7 @@ vibrato.set({
 
 filterenv.connect(filter.frequency)
 
-poly.chain(filter, chorus, reverb, vibrato, Tone.Destination);
+// poly.chain(filter, chorus, reverb, vibrato, Tone.Destination);
 
 // Values recieved from user input
 // Wave type for Oscillator
@@ -336,33 +336,41 @@ function transposerctr() {
         notes[i] = note;
     }
 }
-
-var power = document.getElementById("power")
-if (power.checked == true) {
-    console.log("power on")
+function powercheck(){
+    var p = document.getElementById("power")
+    if (p.checked == true) {
+        Tone.start()
+        poly.chain(filter, chorus, reverb, vibrato)
+        poly.connect(Tone.Destination)
+        console.log("power on")
+        var QWERTZ = [
+            "a", "w", "s", "e", "d", "f", "t", "g", "z", "h", "u", "j", "k"
+        ];
+        var pressed = new Set();
+        document.addEventListener("keydown", (event) => {
+        if (QWERTZ.includes(event.key)) {
+            pressed.add(event.key);
+            if (pressed.has(event.key)) {
+                if (event.repeat == true){
+                    return;
+                }  
+                poly.triggerAttack(notes[QWERTZ.indexOf(event.key)]);
+            }      
+        }})
+        document.addEventListener("keyup", (event) => {
+            if (pressed.has(event.key)) {
+                pressed.delete(event.key);
+                poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
+            }
+            if (pressed.has(event.key) == false) {
+                poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
+            }
+            })
+    }
+    else if (p.checked == false) {
+        poly.disconnect(Tone.Destination)
+    }
 }
-var pressed = new Set();
-    document.addEventListener("keydown", (event) => {
-    if (QWERTZ.includes(event.key)) {
-        pressed.add(event.key);
-        if (pressed.has(event.key)) {
-            if (event.repeat == true){
-                return;
-         }
-        poly.triggerAttack(notes[QWERTZ.indexOf(event.key)]);
-        console.log(poly.activeVoices);
-    }
-    }})
-    document.addEventListener("keyup", (event) => {
-    if (pressed.has(event.key)) {
-        pressed.delete(event.key);
-        poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
-    }
-    if (pressed.has(event.key) == false) {
-        poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
-    }
-    })
-
 
 // Load function
 function patchload(){

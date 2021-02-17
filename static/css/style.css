@@ -236,6 +236,7 @@ input[type=range][orient=vertical]{
   border-color: indigo;
   border-style: solid;
   border-width: thin;
+  text-align: left;
 }
 
 .content {
@@ -328,6 +329,29 @@ input:checked + .slider:before {
   display: inline-block;
 }
 
+.listitem {
+  margin-bottom: 1em;
+}
+
 .listbutton {
   float: right;
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+.precovery {
+  text-align: center;
+  margin-top: 5em;
+}
+
+.btn {
+  margin-top: 0.5em
+}
+
+#patches{
+  margin-top: 0.5em
+}
+
+#getpatch{
+  margin-top: 0.5em
 }

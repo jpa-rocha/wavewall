@@ -41,7 +41,7 @@ vibrato.set({
 
 filterenv.connect(filter.frequency)
 
-// poly.chain(filter, chorus, reverb, vibrato, Tone.Destination);
+poly.chain(filter, chorus, reverb, vibrato, Tone.Destination);
 
 // Values recieved from user input
 // Wave type for Oscillator
@@ -147,10 +147,18 @@ function amopt(){
 
 // Volume control
 function volumectr() {
-var sourcevol = document.getElementById("vol")
-  poly.set({
-    volume : sourcevol.value
-  });
+    var p = document.getElementById("power")
+    if (p.checked == true) {
+        var sourcevol = document.getElementById("vol")
+        poly.set({
+            volume : sourcevol.value
+        });
+        }
+    else {
+        poly.set({
+            volume : -1000
+        });
+    }
 }
 
 
@@ -339,10 +347,10 @@ function transposerctr() {
 function powercheck(){
     var p = document.getElementById("power")
     if (p.checked == true) {
-        Tone.start()
-        poly.chain(filter, chorus, reverb, vibrato)
-        poly.connect(Tone.Destination)
-        console.log("power on")
+        var sourcevol = document.getElementById("vol")
+        poly.set({
+            volume : sourcevol.value
+        });
         var QWERTZ = [
             "a", "w", "s", "e", "d", "f", "t", "g", "z", "h", "u", "j", "k"
         ];
@@ -368,7 +376,9 @@ function powercheck(){
             })
     }
     else if (p.checked == false) {
-        poly.disconnect(Tone.Destination)
+        poly.set({
+            volume : -1000
+        });
     }
 }
 

@@ -5,6 +5,7 @@ It can be controlled using the keyboard and it has different parameters that all
 
 # Oscillator
 
+
 Waves:
 
 Different waves can be selected:
@@ -21,6 +22,7 @@ Different types of oscillators can be selected:
 - FM and AM oscillators: which can be further modulated by different wave forms
 
 # Filter
+
 
 Pass:
 
@@ -41,11 +43,13 @@ Cutoff
 
 Defines the cutoff frequency for the filter
 
+
 # Envelopes
 
 Amplitude & Filter:
 
 Different Attack, Decay, Sustain and Release can be set to shape the wave
+
 
 # Effects
 
@@ -64,6 +68,7 @@ Vibrato:
 - Frequency
 - Amount
 
+
 # Controls
 
 Power:
@@ -78,9 +83,10 @@ Volume:
 
 Self-explanatory
 
+
 # Patches
 
-If the user is logged in he can save different patches to be able to use as presets.
+If the user is logged in he can save up to 10 different patches, to be able to use as presets.
 Patches must have a unique name in order to be saved
 
 

@@ -33,7 +33,21 @@ def main():
 
 @app.route("/error")
 def error(message,number):
-    return render_template("error.html")
+    message = message
+    number = number
+    try:
+        if session["user_id"]:
+            db = sqlite3.connect("wavewall.db")
+            db.row_factory = sqlite3.Row
+            ex = db.cursor()
+            row = ex.execute("SELECT username FROM users WHERE id = ?", (session["user_id"],))
+            r = row.fetchone()
+            r.keys()
+            username = r["username"]
+            db.close()
+            return render_template("error.html", **locals())
+    except:
+        return render_template("error.html", **locals())
 
 
 @app.route("/synth", methods=["GET", "POST"])
@@ -95,7 +109,7 @@ def synth():
 
             # Patch must have a name
             if not request.form.get("patchname"):
-                return error("must provide patch name", 403)
+                return error("Must provide patch name.", 403)
 
             rows = ex.execute("SELECT * FROM patches WHERE name=?",
                             (name, ))
@@ -104,13 +118,13 @@ def synth():
             list_rows = rows.fetchall()
             name_check = empty(list_rows)
             if name_check == False:
-                return error("Patch name is taken", 403)
+                return error("Patch name is taken.", 403)
 
             # Patch limit
             limit_check = ex.execute("SELECT user_id FROM patches WHERE user_id=?", (session["user_id"],))
             limit_row = limit_check.fetchall()
-            if len(limit_row) > 10:
-                return error("Only 10 patches are allowed per user", 403)
+            if len(limit_row) >= 10:
+                return error("Only 10 patches are allowed per user.", 403)
 
             ex.execute("INSERT INTO patches (user_id, name, waveform, type, modulation, filter, rolloff, \
                         cutoff, ampa, ampd, amps, ampr, fila, fild, fils, filr, choruscheck, cdepth, cfreq, \
@@ -314,11 +328,11 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return error("must provide username", 403)
+            return error("Must provide username.", 403)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return error("must provide password", 403)
+            return error("Must provide password.", 403)
 
         # Query database for username
         rows = ex.execute("SELECT * FROM users WHERE username =?",
@@ -329,7 +343,7 @@ def login():
         r.keys()
 
         if r["username"] != username or check_password_hash(r["hash"], request.form.get("password")) == False:
-            return error("invalid username and/or password", 403)
+            return error("Invalid username and/or password.", 403)
 
         # Remember which user has logged in
         session["user_id"] = r["id"]
@@ -368,15 +382,15 @@ def register():
         
         # Ensure username was submitted
         if not request.form.get("username"):
-            return error("must provide username", 403)
+            return error("Must provide username.", 403)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return error("must provide password", 403)
+            return error("Must provide password.", 403)
 
         # Password must match password confirmation
         elif request.form.get("password") != request.form.get("confirmpassword"):
-            return error("passwords must match", 403)
+            return error("Passwords must match.", 403)
         
         rows = ex.execute("SELECT * FROM users WHERE username=?",
                           (username, ))
@@ -385,7 +399,7 @@ def register():
         list_rows = rows.fetchall()
         username_check = empty(list_rows)
         if username_check == False:
-            return error("username is taken", 403)
+            return error("Username is taken.", 403)
             
 
         else:

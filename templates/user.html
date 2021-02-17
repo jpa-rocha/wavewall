@@ -10,7 +10,7 @@
         <form action="/user" method="POST">
             <ul class="userlist">
                 {% for patch in patches %}
-                    <li class="listitem">{{patch}}<button type="submit" name="patch" class="listbutton" value="{{patch}}">Delete</button></li>
+                    <li class="listitem">{{patch}}<button type="submit" name="patch" class="listbutton" value="{{patch}}"style="margin-left: 5em">Delete</button></li>
                 {% endfor %}
             </ul>
         </form>

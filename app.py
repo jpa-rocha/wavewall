@@ -100,11 +100,17 @@ def synth():
             rows = ex.execute("SELECT * FROM patches WHERE name=?",
                             (name, ))
 
-            #  Patch name needs to be unique
+            # Patch name needs to be unique
             list_rows = rows.fetchall()
             name_check = empty(list_rows)
             if name_check == False:
                 return error("Patch name is taken", 403)
+
+            # Patch limit
+            limit_check = ex.execute("SELECT user_id FROM patches WHERE user_id=?", (session["user_id"],))
+            limit_row = limit_check.fetchall()
+            if len(limit_row) > 10:
+                return error("Only 10 patches are allowed per user", 403)
 
             ex.execute("INSERT INTO patches (user_id, name, waveform, type, modulation, filter, rolloff, \
                         cutoff, ampa, ampd, amps, ampr, fila, fild, fils, filr, choruscheck, cdepth, cfreq, \

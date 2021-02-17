@@ -27,7 +27,7 @@ Session(app)
 
 
 
-@app.route("/main")
+@app.route("/")
 def main():
     return render_template("main.html")
 

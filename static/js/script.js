@@ -315,9 +315,9 @@ function vibratoctr(){
 }
 
 // keyboard keys
-var QWERTZ = [
-    "a", "w", "s", "e", "d", "f", "t", "g", "z", "h", "u", "j", "k"
-];
+//var QWERTZ = [
+//   "a", "w", "s", "e", "d", "f", "t", "g", "z", "h", "u", "j", "k"
+//];
 
 // transposing
 var notes = [
@@ -352,26 +352,26 @@ function powercheck(){
             volume : sourcevol.value
         });
         var QWERTZ = [
-            "a", "w", "s", "e", "d", "f", "t", "g", "z", "h", "u", "j", "k"
+            "KeyA", "KeyW", "KeyS", "KeyE", "KeyD", "KEyF", "KeyT", "KeyG", "KeyY", "KeyH", "KeyU", "KeyJ", "KeyK"
         ];
         var pressed = new Set();
         document.addEventListener("keydown", (event) => {
-        if (QWERTZ.includes(event.key)) {
-            pressed.add(event.key);
-            if (pressed.has(event.key)) {
+        if (QWERTZ.includes(event.code)) {
+            pressed.add(event.code);
+            if (pressed.has(event.code)) {
                 if (event.repeat == true){
                     return;
                 }  
-                poly.triggerAttack(notes[QWERTZ.indexOf(event.key)]);
+                poly.triggerAttack(notes[QWERTZ.indexOf(event.code)]);
             }      
         }})
         document.addEventListener("keyup", (event) => {
-            if (pressed.has(event.key)) {
-                pressed.delete(event.key);
-                poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
+            if (pressed.has(event.code)) {
+                pressed.delete(event.code);
+                poly.triggerRelease(notes[QWERTZ.indexOf(event.code)]);
             }
-            if (pressed.has(event.key) == false) {
-                poly.triggerRelease(notes[QWERTZ.indexOf(event.key)]);
+            if (pressed.has(event.code) == false) {
+                poly.triggerRelease(notes[QWERTZ.indexOf(event.code)]);
             }
             })
     }

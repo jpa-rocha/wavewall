@@ -4,10 +4,10 @@ WAVEWALL is a in-browser synthesizer, built using the tone.js library.
 It can be controlled using the keyboard and it has different parameters that allow to shape the sound.
 You can try it at https://wavewall.herokuapp.com/
 
-# Oscillator
+## Oscillator
 
 
-Waves:
+### Waves:
 
 Different waves can be selected:
 - Square
@@ -15,24 +15,24 @@ Different waves can be selected:
 - Triangle
 - Sine
 
-Type:
+### Type:
 
 Different types of oscillators can be selected:
 - Plain oscillator
 - FAT oscillator
 - FM and AM oscillators: which can be further modulated by different wave forms
 
-# Filter
+## Filter
 
 
-Pass:
+### Pass:
 
 Different filter types can be selected:
 - Low-pass
 - Band-pass
 - High-pass
 
-Roll-off:
+### Roll-off:
 
 Defines the steepness of the curve:
 - -12
@@ -40,52 +40,55 @@ Defines the steepness of the curve:
 - -48
 - -96
 
-Cutoff
+### Cutoff
 
 Defines the cutoff frequency for the filter
 
 
-# Envelopes
+## Envelopes
 
-Amplitude & Filter:
+### Amplitude & Filter:
 
 Different Attack, Decay, Sustain and Release can be set to shape the wave
 
 
-# Effects
+## Effects
 
-Chorus:
+### Chorus:
+
 - Depth
 - Frequency
 - Delay
 - Amount
 
-Reverb:
+### Reverb:
+
 - Decay
 - Amount
 
-Vibrato:
+### Vibrato:
+
 - Depth
 - Frequency
 - Amount
 
 
-# Controls
+## Controls
 
-Power:
+### Power:
 
 Controls if the synthesiser is on or not, allows that Patches are named without playing sound.
 
-Transposer:
+### Transposer:
 
 Transposes the keyboard making it lower or higher
 
-Volume:
+### Volume:
 
 Self-explanatory
 
 
-# Patches
+## Patches
 
 If the user is logged in he can save up to 10 different patches, to be able to use as presets.
 Patches must have a unique name in order to be saved

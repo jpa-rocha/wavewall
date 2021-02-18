@@ -314,3 +314,13 @@ input:checked + .slider:before {
 #getpatch{
   margin-top: 0.5em
 }
+
+#register {
+  text-align: center;
+  margin-top: 5em;
+}
+
+#login {
+  text-align: center;
+  margin-top: 5em;
+}

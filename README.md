@@ -7,7 +7,7 @@ You can try it at https://wavewall.herokuapp.com/
 ## Oscillator
 
 
-###### Waves:
+### Waves:
 
 Different waves can be selected:
 - Square

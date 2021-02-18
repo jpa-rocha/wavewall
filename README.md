@@ -1,6 +1,6 @@
 # WAVEWALL
 
-WAVEWALL is a in-browser synthesiser, built using the tone.js library.
+WAVEWALL is a in-browser synthesizer, built using the tone.js library.
 It can be controlled using the keyboard and it has different parameters that allow to shape the sound.
 You can try it at https://wavewall.herokuapp.com/
 

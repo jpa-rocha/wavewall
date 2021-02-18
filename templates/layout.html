@@ -15,11 +15,11 @@
     <div class="gridwrapper">
     {% if session.user_id %}
       <div class="row nav">
-        <div class="col-6 menu">
+        <div class="col-l-6 menu">
           <a href="/synth" class="nav-el">Synthesizer</a>
           <a href="/about" class="nav-el">About</a>
         </div>   
-        <div class="col-4 reg">
+        <div class="col-l-4 reg">
           <a href="/user" class="nav-el">{{username}}</a>
           <a href="/logout" class="nav-el">Log Out</a>
         </div>
@@ -30,7 +30,7 @@
           <a href="/synth" class="nav-el">Synthesiser</a>
           <a href="/about" class="nav-el">About</a>
         </div>   
-        <div class="col-4 reg">
+        <div class="col-l-4 reg">
           <a href="/login" class="nav-el">Log In</a>
           <a href="/register" class="nav-el">Register</a>
         </div>
@@ -38,7 +38,7 @@
     {% endif %}
         
     {% block main %}{% endblock %}
-      <footer id="footer" class="col-12"><p>Made by João Rocha</p><p>2020</p></footer>
+      <footer id="footer" class="col-l-12"><p>Made by João Rocha</p><p>2020</p></footer>
     </div>
   </body>
 </html>

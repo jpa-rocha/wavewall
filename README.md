@@ -2,6 +2,8 @@
 
 <br>
 
+www.wavewall.herokuapp.com
+
 ## **Description**:
 WAVEWALL is an online synthesizer built using the tone.js javascript library, it allows the user to alter different parameters in order to create different patches.
 The instrument can be played using the computer keyboard with keys "A" (C4) to "K" (C5) representing the white keys on a piano keayboard,

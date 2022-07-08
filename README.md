@@ -2,7 +2,7 @@
 
 <br>
 
-www.wavewall.herokuapp.com
+https://wavewall.herokuapp.com/
 
 ## **Description**:
 WAVEWALL is an online synthesizer built using the tone.js javascript library, it allows the user to alter different parameters in order to create different patches.
